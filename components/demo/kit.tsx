@@ -61,7 +61,7 @@ export function Frames({
 export function Slate({ kicker, title }: { kicker: string; title: string }) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#151515] text-[#f3efe7]">
-      <Mark className="h-12 text-[#f3efe7]" />
+      <Mark className="h-16" />
       <p className="mt-5 font-display text-[18px] tracking-[0.2em]">
         HONEYCOMB
       </p>
@@ -86,6 +86,7 @@ export function EndCard({
 }) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#151515] text-[#f3efe7]">
+      <Mark className="mb-8 h-14" />
       <p className="font-mono text-[14px] tracking-[0.16em] text-[#f3efe7]/65 uppercase">
         {kicker}
       </p>
@@ -100,7 +101,7 @@ export function EndCard({
 export function BrandLockup() {
   return (
     <div className="flex items-center gap-2 text-[#151515]">
-      <Mark className="h-5" />
+      <Mark className="h-7" />
       <span className="font-display text-[13px] tracking-[0.16em]">
         HONEYCOMB
       </span>

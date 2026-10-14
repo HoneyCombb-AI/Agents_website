@@ -83,7 +83,7 @@ export function SiteFooter() {
           aria-label="Honeycomb"
         >
           <div
-            className="aspect-[1985/220] w-full max-w-[1100px] bg-current"
+            className="aspect-[1785/219] w-full max-w-[1100px] bg-current"
             style={{
               WebkitMaskImage: "url(/wordmark.svg)",
               maskImage: "url(/wordmark.svg)",
