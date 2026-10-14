@@ -109,6 +109,7 @@ export function Industries() {
   const [industryId, setIndustryId] = useState<string | null>(null)
   const [openId, setOpenId] = useState<string | null>(null)
   const stageRef = useRef<HTMLDivElement>(null)
+  const agentsHeadingRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
 
   useEffect(() => {
@@ -131,6 +132,16 @@ export function Industries() {
       setIndustryId(id)
       setOpenId(null)
       setDim(false)
+      const heading = agentsHeadingRef.current
+      if (!heading) return
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+      const top = heading.getBoundingClientRect().top + window.scrollY - 72 - 16
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: reduced ? "auto" : "smooth",
+      })
     }, 140)
   }
 
@@ -183,7 +194,10 @@ export function Industries() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div
+          ref={agentsHeadingRef}
+          className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+        >
           <p className="flex flex-wrap items-center gap-x-3 font-mono text-[13px] tracking-[0.08em] text-ink-3 uppercase">
             <span className="text-charcoal">
               {selected
