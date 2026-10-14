@@ -129,7 +129,7 @@ const arts: Record<AgentId, ReactNode> = {
         title="Sagar Hydraulics"
         lines={[
           "HC-4410 housing · ₹7,250",
-          "HC-4412 shaft · ₹3,885",
+          "HC-4412 cover · ₹3,885",
           "Qty 120 · valid 30 days",
         ]}
       />

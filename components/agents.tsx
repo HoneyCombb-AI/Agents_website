@@ -7,7 +7,13 @@ import type { KeyboardEvent } from "react"
 import { agentIcons } from "@/components/agent-icons"
 import { Container } from "@/components/container"
 import { useSite } from "@/components/site-state"
-import { agents, agentsFor, industries, type Agent } from "@/lib/content"
+import {
+  agents,
+  agentsFor,
+  DEMO_MAIL,
+  industries,
+  type Agent,
+} from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 function signedDistance(index: number, active: number, total: number) {
@@ -107,29 +113,35 @@ export function Agents() {
       className="agent-stage scroll-mt-24 bg-ivory pt-16 pb-20 outline-none md:pt-28 md:pb-32"
     >
       <Container className="flex flex-col items-center gap-8">
-        <div aria-live="polite" className="text-center">
-          <p className="font-mono text-[15px] tracking-[0.08em] text-charcoal uppercase">
-            {filtered.length === agents.length
-              ? `${agents.length} agents`
-              : `${filtered.length} of ${agents.length} agents`}
-          </p>
-          <p className="mt-2 font-mono text-[15px] tracking-[0.08em] text-ink-3 uppercase">
-            {industry ? (
-              <>
-                Best fit for{" "}
-                <span className="text-charcoal">{industry.label}</span>
-                <span aria-hidden> · </span>
-                <button
-                  type="button"
-                  onClick={() => selectIndustry(null)}
-                  className="text-charcoal underline underline-offset-4"
-                >
-                  Show all
-                </button>
-              </>
-            ) : (
-              <span className="text-charcoal">All industries</span>
-            )}
+        <div className="text-center">
+          <div aria-live="polite">
+            <p className="font-mono text-[15px] tracking-[0.08em] text-charcoal uppercase">
+              {filtered.length === agents.length
+                ? `${agents.length} agents`
+                : `${filtered.length} of ${agents.length} agents`}
+            </p>
+            <p className="mt-2 font-mono text-[15px] tracking-[0.08em] text-ink-3 uppercase">
+              {industry ? (
+                <>
+                  Best fit for{" "}
+                  <span className="text-charcoal">{industry.label}</span>
+                  <span aria-hidden> · </span>
+                  <button
+                    type="button"
+                    onClick={() => selectIndustry(null)}
+                    className="text-charcoal underline underline-offset-4"
+                  >
+                    Show all
+                  </button>
+                </>
+              ) : (
+                <span className="text-charcoal">All industries</span>
+              )}
+            </p>
+          </div>
+          <p className="mx-auto mt-6 max-w-[38rem] text-[19px] leading-7 text-ink-2">
+            Start with these agents. As we work alongside your team, we build
+            the next ones around your workflow.
           </p>
           <Link
             href="/product"
@@ -217,6 +229,25 @@ export function Agents() {
           </div>
         </div>
       </div>
+
+      <Container className="mt-14 md:mt-16">
+        <a
+          href={DEMO_MAIL}
+          className="flex flex-col items-start justify-between gap-4 border border-hairline bg-charcoal px-6 py-6 text-ivory transition-colors duration-300 hover:bg-graphite md:flex-row md:items-center md:px-8"
+        >
+          <span>
+            <span className="font-mono text-[13px] tracking-[0.08em] text-ivory/70 uppercase">
+              Your next agent
+            </span>
+            <span className="mt-2 block font-body text-[24px] leading-8">
+              Built with your team
+            </span>
+          </span>
+          <span className="font-mono text-[15px] tracking-[0.08em] uppercase underline underline-offset-4">
+            Book a demo
+          </span>
+        </a>
+      </Container>
     </section>
   )
 }

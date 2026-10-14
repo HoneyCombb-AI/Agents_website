@@ -161,9 +161,9 @@ export const agents: Agent[] = [
     howBody:
       "It extracts the callouts, checks the job against your machines, builds the route and the cycle time, and costs it on your rates. Your estimator changes a line. And hits send.",
     demoStory:
-      "An RFQ arrives from Vindhya Drives with a drawing of a helical pinion. The agent extracts the specs, checks the shop can make it, routes a forged blank through turning, hobbing, carburising, and grinding, costs the job, and the estimator shortens the gear-grind cycle before sending the quote. Sample data.",
+      "An RFQ arrives from Vindhya Drives with a drawing of a custom machined part. The agent extracts the specs, checks the shop can make it, routes a forged blank through turning, milling, carburising, and grinding, costs the job, and the estimator shortens the grind cycle before sending the quote. Sample data.",
     different: different(
-      "We build it with your estimators, from your machines, your rate card, and the way a drawing becomes a route. Gears, shafts, and other build-to-print work.",
+      "We build it with your estimators, from your machines, your rate card, and the way a drawing becomes a route. Custom, build-to-print work, made to the customer's drawing.",
       "It reads the PDF or TIF in your inbox and prices the job on your machine-hour rates. Your data stays where it is. Change a cycle time, and that is the number that goes out.",
       "The quote it drafts is the quote Order Entry will check, and the route is the one Scheduling can place."
     ),
@@ -176,11 +176,11 @@ export const agents: Agent[] = [
     faqs: [
       {
         q: "How does Honeycomb AI’s Quoting agent work?",
-        a: "A drawing comes in. It pulls material, mass, tolerances, gear data, heat treatment, and finish into a spec table, and flags anything it had to assume. It checks the job against your machines, builds the route op by op, puts a cycle time and a setup on each op, and costs material, machining, heat treat, and overheads down to a rupee per piece. Your estimator reviews it.",
+        a: "A drawing comes in. It pulls material, mass, tolerances, heat treatment, and finish into a spec table, and flags anything it had to assume. It checks the job against your machines, builds the route op by op, puts a cycle time and a setup on each op, and costs material, machining, heat treat, and overheads down to a rupee per piece. Your estimator reviews it.",
       },
       {
         q: "How do you build my Quoting agent?",
-        a: "On your floor, with your estimators, in four steps. We learn how you route a gear or a shaft, build the agent on your machines and your rate card, run live drawings through it with you, and then let it draft in the inbox you already use.",
+        a: "On your floor, with your estimators, in four steps. We learn how a drawing becomes a route, build the agent on your machines and your rate card, run live drawings through it with you, and then let it draft in the inbox you already use.",
       },
       {
         q: "Does an estimator still check the quote?",
@@ -188,7 +188,7 @@ export const agents: Agent[] = [
       },
       {
         q: "What work is it for?",
-        a: "Custom, build-to-print parts, where every job starts from the customer's drawing. Gears, shafts, and machined components, priced on your machines and your rates.",
+        a: "Custom, build-to-print work, made to the customer's drawing and priced on your machines and your rates.",
       },
     ],
     cta: "Spend your hours where they count. Start with your Quoting agent.",
@@ -387,88 +387,85 @@ export const agents: Agent[] = [
 export type Industry = {
   id: string
   label: string
-  short: string
+  note: string
   agents: AgentId[]
-  image: string
+  featured?: boolean
 }
 
 export const industries: Industry[] = [
   {
-    id: "machining",
-    label: "Precision machining",
-    short: "Machining",
-    agents: ["quoting", "order-entry", "scheduling", "ap-ar"],
-    image: photo("1565043589221-1a6fd9ae45c7", 900),
-  },
-  {
-    id: "gears",
-    label: "Gears",
-    short: "Gears",
-    agents: ["quoting", "order-entry", "scheduling", "customer-service"],
-    image: photo("1581092918056-0c4c3acd3789", 900),
-  },
-  {
-    id: "castings",
-    label: "Castings & forgings",
-    short: "Castings",
-    agents: ["quoting", "scheduling", "ap-ar", "prospecting"],
-    image: photo("1504328345606-18bbc8c9d7d1", 900),
-  },
-  {
-    id: "automotive",
-    label: "Automotive components",
-    short: "Automotive",
-    agents: ["quoting", "order-entry", "ap-ar", "scheduling"],
-    image: photo("1619642751034-765dfdf7c58e", 900),
-  },
-  {
-    id: "aerospace",
-    label: "Aerospace",
-    short: "Aerospace",
-    agents: ["quoting", "order-entry", "ap-ar", "customer-service"],
-    image: photo("1540962351504-03099e0a754b", 900),
-  },
-  {
     id: "textiles",
     label: "Textiles & yarn",
-    short: "Textiles",
-    agents: ["quoting", "order-entry", "ap-ar", "scheduling"],
-    image: photo("1558618666-fcd25c85cd64", 900),
+    note: "Yarn, fabric, and mills",
+    agents: ["order-entry", "scheduling", "customer-service"],
+    featured: true,
   },
   {
-    id: "electrical",
-    label: "Electrical distribution",
-    short: "Electrical",
-    agents: ["quoting", "order-entry", "ap-ar", "customer-service"],
-    image: photo("1581092334651-ddf26d9a09d0", 900),
-  },
-  {
-    id: "supply",
-    label: "Industrial supply",
-    short: "Industrial supply",
-    agents: ["prospecting", "quoting", "order-entry", "customer-service"],
-    image: photo("1586528116311-ad8dd3c8310d", 900),
-  },
-  {
-    id: "fasteners",
-    label: "Fasteners",
-    short: "Fasteners",
-    agents: ["prospecting", "quoting", "order-entry", "ap-ar"],
-    image: photo("1581092162384-8987c1d64718", 900),
-  },
-  {
-    id: "bearings",
-    label: "Bearings",
-    short: "Bearings",
-    agents: ["prospecting", "quoting", "customer-service", "order-entry"],
-    image: photo("1504917595217-d4dc5ebe6122", 900),
+    id: "electricals",
+    label: "Electricals & electronics",
+    note: "Assemblies, panels, and components",
+    agents: [
+      "quoting",
+      "order-entry",
+      "scheduling",
+      "customer-service",
+      "ap-ar",
+    ],
   },
   {
     id: "plastics",
-    label: "Plastics & packaging",
-    short: "Plastics",
-    agents: ["quoting", "prospecting", "scheduling", "order-entry"],
-    image: photo("1581094794329-c8112a89af12", 900),
+    label: "Plastics & moulding",
+    note: "Moulded parts and components",
+    agents: ["quoting", "order-entry", "scheduling", "customer-service"],
+  },
+  {
+    id: "custom",
+    label: "Custom manufacturing",
+    note: "Build-to-print and job shops",
+    agents: [
+      "prospecting",
+      "quoting",
+      "order-entry",
+      "scheduling",
+      "customer-service",
+      "ap-ar",
+    ],
+  },
+  {
+    id: "metals",
+    label: "Metals & fabrication",
+    note: "Fabricated and machined metal",
+    agents: [
+      "quoting",
+      "order-entry",
+      "scheduling",
+      "customer-service",
+      "ap-ar",
+    ],
+  },
+  {
+    id: "distributors",
+    label: "Industrial distributors",
+    note: "Stock, supply, and resale",
+    agents: ["prospecting", "order-entry", "customer-service", "ap-ar"],
+  },
+  {
+    id: "packaging",
+    label: "Packaging",
+    note: "Packs, cartons, and converted stock",
+    agents: ["order-entry", "scheduling", "customer-service", "ap-ar"],
+  },
+  {
+    id: "auto",
+    label: "Auto components",
+    note: "Components for vehicle makers",
+    agents: [
+      "quoting",
+      "order-entry",
+      "scheduling",
+      "customer-service",
+      "ap-ar",
+    ],
   },
 ]
 

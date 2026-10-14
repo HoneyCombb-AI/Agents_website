@@ -1,14 +1,94 @@
 "use client"
 
-import Image from "next/image"
-
 import { Container } from "@/components/container"
 import { useSite } from "@/components/site-state"
-import { industries } from "@/lib/content"
+import { agents, industries, type Industry } from "@/lib/content"
 import { cn } from "@/lib/utils"
+
+function industryAgents(industry: Industry) {
+  return industry.agents
+    .map((id) => agents.find((agent) => agent.id === id))
+    .filter((agent) => agent !== undefined)
+}
+
+function IndustryButton({
+  industry,
+  pressed,
+  onSelect,
+  featured,
+}: {
+  industry: Industry
+  pressed: boolean
+  onSelect: () => void
+  featured?: boolean
+}) {
+  const fits = industryAgents(industry)
+  return (
+    <button
+      type="button"
+      aria-pressed={pressed}
+      aria-label={`${industry.label}. ${fits.map((agent) => agent.label).join(", ")}`}
+      onClick={onSelect}
+      className={cn(
+        "flex flex-col text-left focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-charcoal",
+        featured
+          ? "gap-4 border border-hairline px-6 py-6 md:px-8 md:py-8"
+          : "min-h-[132px] gap-3 border-r border-b border-hairline px-4 py-4 md:px-5 md:py-5",
+        pressed
+          ? "z-10 bg-charcoal text-ivory outline outline-2 -outline-offset-2 outline-charcoal"
+          : featured
+            ? "bg-mist text-charcoal hover:bg-sand/40"
+            : "bg-ivory text-charcoal hover:bg-mist"
+      )}
+    >
+      <span>
+        <span
+          className={cn(
+            "block leading-snug",
+            featured
+              ? "text-[26px] md:text-[32px]"
+              : "text-[17px] md:text-[18px]"
+          )}
+        >
+          {industry.label}
+        </span>
+        <span
+          className={cn(
+            "mt-1 block leading-5",
+            featured ? "mt-2 text-[16px] leading-6" : "text-[14px]",
+            pressed ? "text-ivory/75" : "text-ink-2"
+          )}
+        >
+          {industry.note}
+        </span>
+      </span>
+      <span
+        className={cn(
+          "mt-auto flex flex-wrap gap-x-3 gap-y-1",
+          featured ? "gap-x-5" : ""
+        )}
+      >
+        {fits.map((agent) => (
+          <span
+            key={agent.id}
+            className={cn(
+              "font-mono tracking-[0.06em] uppercase",
+              featured ? "text-[13px]" : "text-[11px] leading-4",
+              pressed ? "text-ivory/80" : "text-stone"
+            )}
+          >
+            {agent.label}
+          </span>
+        ))}
+      </span>
+    </button>
+  )
+}
 
 export function Industries() {
   const { industryId, selectIndustry } = useSite()
+  const featured = industries.find((industry) => industry.featured)
+  const rest = industries.filter((industry) => !industry.featured)
 
   return (
     <section
@@ -17,95 +97,50 @@ export function Industries() {
     >
       <Container className="flex flex-col items-start gap-6">
         <h2 className="font-body text-[clamp(32px,3.4vw,48px)] leading-[1.12] font-normal tracking-[-0.01em] text-charcoal">
-          Tell us what you make.
+          Tell us the work.
         </h2>
         <p className="max-w-[46rem] text-[19px] leading-7 text-ink-2 lg:text-[clamp(17px,1.7vw,21px)] lg:leading-8">
-          Each agent takes one job off the desk and answers your customers
-          faster, with your own numbers.
+          The agents under each name are the ones that fit.
         </p>
 
-        <div
-          role="group"
-          aria-label="Industry"
-          className="mt-6 grid w-full grid-cols-2 border-t border-l border-hairline sm:grid-cols-3 lg:grid-cols-6"
-        >
-          {industries.map((industry) => {
-            const pressed = industryId === industry.id
-            return (
-              <button
+        <div role="group" aria-label="Industry" className="mt-6 w-full">
+          {featured ? (
+            <IndustryButton
+              industry={featured}
+              featured
+              pressed={industryId === featured.id}
+              onSelect={() =>
+                selectIndustry(industryId === featured.id ? null : featured.id)
+              }
+            />
+          ) : null}
+          <div className="mt-3 grid grid-cols-2 border-t border-l border-hairline sm:grid-cols-3 lg:grid-cols-4">
+            {rest.map((industry) => (
+              <IndustryButton
                 key={industry.id}
-                type="button"
-                aria-pressed={pressed}
-                aria-label={industry.label}
-                onClick={() => selectIndustry(pressed ? null : industry.id)}
-                className={cn(
-                  "group relative aspect-[3/2] overflow-hidden border-r border-b border-hairline bg-charcoal p-4 text-ivory focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-charcoal sm:aspect-square",
-                  pressed && "outline outline-2 -outline-offset-2 outline-ivory"
-                )}
-              >
-                <Image
-                  src={industry.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 16vw, 50vw"
-                  className="scale-110 object-cover blur-[6px]"
-                />
-                <Image
-                  src={industry.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 16vw, 50vw"
-                  className="scale-105 object-cover opacity-0 transition duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
-                />
-                <span className="absolute inset-0 bg-charcoal/70 transition duration-500 group-hover:opacity-0 group-focus-visible:opacity-0" />
-                <span className="relative z-10 flex h-full flex-col items-center justify-center gap-2 text-center transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0">
-                  <span className="text-[17px] leading-[24px] md:text-[19px] md:leading-[26px]">
-                    {industry.short}
-                  </span>
-                  {pressed ? (
-                    <span className="font-mono text-[13px] tracking-[0.08em] text-ivory/75 uppercase">
-                      {industry.agents.length} agents
-                    </span>
-                  ) : null}
-                </span>
-              </button>
-            )
-          })}
-          <button
-            type="button"
-            aria-pressed={industryId === null}
-            onClick={() => selectIndustry(null)}
-            className={cn(
-              "group relative aspect-[3/2] overflow-hidden border-r border-b border-hairline bg-charcoal p-4 text-ivory focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-charcoal sm:aspect-square",
-              industryId === null &&
-                "outline outline-2 -outline-offset-2 outline-ivory"
-            )}
-          >
-            <Image
-              src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=900&q=80"
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 16vw, 50vw"
-              className="scale-110 object-cover blur-[6px]"
-            />
-            <Image
-              src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=900&q=80"
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 16vw, 50vw"
-              className="scale-105 object-cover opacity-0 transition duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
-            />
-            <span className="absolute inset-0 bg-charcoal/70 transition duration-500 group-hover:opacity-0 group-focus-visible:opacity-0" />
-            <span className="relative z-10 flex h-full flex-col items-center justify-center gap-2 text-center transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0">
-              <span className="text-[17px] leading-[24px] md:text-[19px] md:leading-[26px]">
-                All industries
-              </span>
-              <span className="font-mono text-[13px] tracking-[0.08em] text-ivory/75 uppercase">
-                6 agents
-              </span>
-            </span>
-          </button>
+                industry={industry}
+                pressed={industryId === industry.id}
+                onSelect={() =>
+                  selectIndustry(
+                    industryId === industry.id ? null : industry.id
+                  )
+                }
+              />
+            ))}
+          </div>
         </div>
+
+        <button
+          type="button"
+          aria-pressed={industryId === null}
+          onClick={() => selectIndustry(null)}
+          className={cn(
+            "font-mono text-[13px] tracking-[0.08em] uppercase underline underline-offset-4 transition-colors hover:text-ember",
+            industryId === null ? "text-charcoal" : "text-ink-3"
+          )}
+        >
+          All industries
+        </button>
       </Container>
     </section>
   )

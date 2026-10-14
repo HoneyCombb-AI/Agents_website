@@ -17,10 +17,10 @@ import {
 } from "@/components/demo/kit"
 
 const HOUSING = 7250
-const SHAFT_PO = 3480
-const SHAFT_QUOTE = 3885
+const COVER_PO = 3480
+const COVER_QUOTE = 3885
 const LIST = 4200
-const TOTAL = 120 * HOUSING + 120 * SHAFT_PO
+const TOTAL = 120 * HOUSING + 120 * COVER_PO
 const DECCAN = 813600
 
 function Inbox({ local }: { local: number }) {
@@ -37,7 +37,7 @@ function Inbox({ local }: { local: number }) {
               active
               from="Sagar Hydraulics"
               subject="PO 50817"
-              preview="Releasing PO 50817 for impeller housings and pump shafts."
+              preview="Releasing PO 50817 for impeller housings and end covers."
               time="9:42 AM"
             />
           </div>
@@ -79,8 +79,8 @@ function Inbox({ local }: { local: number }) {
             9:42 AM
           </p>
           <p className="mt-6 max-w-[560px] text-[16px] leading-7">
-            Releasing PO 50817 for 120 impeller housings and 120 pump shafts,
-            per your latest quote. Please confirm the ship date.
+            Releasing PO 50817 for 120 impeller housings and 120 end covers, per
+            your latest quote. Please confirm the ship date.
           </p>
           <p className="mt-4 text-[16px] leading-7">
             Thanks,
@@ -152,9 +152,9 @@ function Reading({ local }: { local: number }) {
             </tr>
             <tr className="border-b border-[#f0ebe3]">
               <td className="py-2">HC-4412</td>
-              <td className="py-2">Pump shaft, EN24</td>
+              <td className="py-2">End cover, EN24</td>
               <td className="py-2">120</td>
-              <td className="py-2 text-right">{inr(120 * SHAFT_PO)}</td>
+              <td className="py-2 text-right">{inr(120 * COVER_PO)}</td>
             </tr>
           </tbody>
         </table>
@@ -193,8 +193,8 @@ function Reading({ local }: { local: number }) {
         />
         <CheckCard
           kicker="Line 2 · HC-4412"
-          title={`120 × ${inr(SHAFT_PO)}`}
-          detail={`Quote ${inr(SHAFT_QUOTE)} · Price off`}
+          title={`120 × ${inr(COVER_PO)}`}
+          detail={`Quote ${inr(COVER_QUOTE)} · Price off`}
           tone="bad"
           style={rise(local, 2700)}
         />
@@ -212,7 +212,7 @@ function Board({ released, local }: { released?: boolean; local: number }) {
       place: "Pune",
       lines: [
         "HC-4410 Impeller housing · qty 120",
-        "HC-4412 Pump shaft, EN24 · qty 120",
+        "HC-4412 End cover, EN24 · qty 120",
       ],
       total: TOTAL,
       flag: "Price",
@@ -237,7 +237,7 @@ function Board({ released, local }: { released?: boolean; local: number }) {
       company: "Coromandel Equipment",
       place: "Hosur",
       lines: [
-        "GB-5128 Gearbox cover · qty 40",
+        "GB-5128 Housing cover · qty 40",
         "GB-5124 Cover gasket · qty 40",
       ],
       total: 1248000,
@@ -343,10 +343,10 @@ function Mismatch({ local }: { local: number }) {
           />
           <Line
             part="HC-4412"
-            name="Pump shaft, EN24"
+            name="End cover, EN24"
             qty="120"
-            price={inr(SHAFT_PO, 2)}
-            amount={inr(120 * SHAFT_PO)}
+            price={inr(COVER_PO, 2)}
+            amount={inr(120 * COVER_PO)}
             bad
           />
         </div>
@@ -360,9 +360,9 @@ function Mismatch({ local }: { local: number }) {
           <p className="mt-2 text-[14px] leading-6">
             List {inr(LIST, 2)}
             <br />
-            Tier B (7.5% off) · expected {inr(SHAFT_QUOTE, 2)}
+            Tier B (7.5% off) · expected {inr(COVER_QUOTE, 2)}
             <br />
-            PO price {inr(SHAFT_PO, 2)} is {inr(SHAFT_QUOTE - SHAFT_PO, 2)}{" "}
+            PO price {inr(COVER_PO, 2)} is {inr(COVER_QUOTE - COVER_PO, 2)}{" "}
             (10.4%) under
           </p>
         </div>
@@ -376,7 +376,7 @@ function Mismatch({ local }: { local: number }) {
           <p className="mt-1 text-[14px] font-medium">RE: PO 50817</p>
           <p className="mt-2 text-[14px] leading-6">
             Hi Meera, thanks for PO 50817. HC-4412 is on the PO at{" "}
-            {inr(SHAFT_PO, 2)}. Quote QT-1842 has {inr(SHAFT_QUOTE, 2)}. HC-4410
+            {inr(COVER_PO, 2)}. Quote QT-1842 has {inr(COVER_QUOTE, 2)}. HC-4410
             matches. Could you send a revised PO, or confirm we should book the
             quoted price?
           </p>

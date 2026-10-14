@@ -22,12 +22,12 @@ const TWEAKED = 2035
 
 const ops = [
   ["10", "Turn, leave grind stock", "CNC lathe", "6.4", "25", inr(128)],
-  ["20", "Hob teeth, leave grind stock", "Hobbing", "7.5", "40", inr(225)],
+  ["20", "Mill the flats", "VMC 3-axis", "7.5", "40", inr(225)],
   ["30", "Mill keyway", "VMC 3-axis", "3.0", "20", inr(75)],
   ["40", "Deburr and wash", "Bench", "2.0", "10", inr(13)],
   ["50", "Carburise, quench, temper", "Outside", "—", "—", "—"],
   ["60", "Grind bore to H7", "ID grind", "2.4", "20", inr(64)],
-  ["70", "Grind tooth flanks", "Gear grind", "9.0", "45", inr(330)],
+  ["70", "Grind the diameter", "OD grind", "9.0", "45", inr(330)],
   ["80", "Inspect and mark", "Bench", "3.0", "15", inr(20)],
 ]
 
@@ -41,7 +41,7 @@ function Inbox({ local }: { local: number }) {
           <MailRow
             active={open > 0.4}
             from="Vindhya Drives"
-            subject="RFQ · helical pinion HG-1842"
+            subject="RFQ · custom machined part HG-1842"
             preview="Drawing package attached. Qty 80."
             time="8:14 AM"
           />
@@ -59,8 +59,8 @@ function Inbox({ local }: { local: number }) {
             Meera Joshi · meera.joshi@vindhyadrives.example
           </p>
           <p className="mt-4 max-w-[540px] text-[16px] leading-7">
-            Please quote 80 off helical pinion HG-1842 Rev B. Drawing and the
-            sheet scan are attached. We need a price and a lead time.
+            Please quote 80 off custom machined part HG-1842 Rev B. Drawing and
+            the sheet scan are attached. We need a price and a lead time.
           </p>
           <div className="mt-5 flex gap-3">
             {[
@@ -95,13 +95,13 @@ const callouts: {
   { at: 800, label: "Mass", value: "2.40 kg", top: "4%", left: "66%" },
   {
     at: 1300,
-    label: "Gear",
-    value: "z 32 · m 2.5 · 18° RH",
+    label: "Outside",
+    value: "Ø118 mm",
     top: "34%",
     left: "3%",
   },
   { at: 1800, label: "Bore", value: "Ø42 H7", top: "34%", left: "72%" },
-  { at: 2300, label: "Face", value: "28 ±0.02", top: "80%", left: "4%" },
+  { at: 2300, label: "Length", value: "86 ±0.05", top: "80%", left: "4%" },
   {
     at: 2800,
     label: "Heat treat",
@@ -111,7 +111,7 @@ const callouts: {
   },
 ]
 
-function GearSheet() {
+function PartSheet() {
   return (
     <svg viewBox="0 0 520 560" className="h-full w-full" aria-hidden>
       <rect
@@ -124,68 +124,58 @@ function GearSheet() {
       />
       <circle
         cx="260"
-        cy="300"
-        r="100"
+        cy="280"
+        r="118"
         fill="none"
         stroke="#cfc8bc"
         strokeDasharray="3 4"
       />
       <circle
         cx="260"
-        cy="300"
-        r="78"
+        cy="280"
+        r="96"
         fill="#f3efe7"
         stroke="#151515"
         strokeWidth="2"
       />
       <circle
         cx="260"
-        cy="300"
-        r="56"
+        cy="280"
+        r="62"
         fill="none"
         stroke="#151515"
         strokeWidth="1.2"
       />
-      {Array.from({ length: 16 }).map((_, i) => {
-        const a = (i / 16) * Math.PI * 2
-        const x1 = 260 + Math.cos(a) * 72
-        const y1 = 300 + Math.sin(a) * 72
-        const x2 = 260 + Math.cos(a) * 90
-        const y2 = 300 + Math.sin(a) * 90
-        return (
-          <line
-            key={i}
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            stroke="#151515"
-            strokeWidth="6"
-            strokeLinecap="square"
-          />
-        )
-      })}
       <circle
         cx="260"
-        cy="300"
-        r="24"
+        cy="280"
+        r="28"
         fill="#fbfaf7"
         stroke="#151515"
         strokeWidth="2"
       />
+      <rect
+        x="248"
+        y="168"
+        width="24"
+        height="22"
+        fill="#fbfaf7"
+        stroke="#151515"
+        strokeWidth="1.4"
+      />
       <line
         x1="260"
-        y1="230"
+        y1="150"
         x2="260"
-        y2="370"
+        y2="410"
         stroke="#c66a28"
         strokeWidth="0.6"
       />
       <line
-        x1="190"
-        y1="300"
-        x2="330"
-        y2="300"
+        x1="130"
+        y1="280"
+        x2="390"
+        y2="280"
         stroke="#c66a28"
         strokeWidth="0.6"
       />
@@ -205,7 +195,7 @@ function GearSheet() {
         fontSize="16"
         fontFamily="ui-sans-serif, system-ui"
       >
-        Helical pinion · sample
+        Custom machined part · sample
       </text>
     </svg>
   )
@@ -215,16 +205,16 @@ function Extract({ local }: { local: number }) {
   const specs = [
     ["Material", "20MnCr5", "Carburising steel"],
     ["Mass", "2.40 kg", "Title block"],
-    ["Gear data", "z 32 · m 2.5 · β 18° RH", "α 20°"],
-    ["Face width", "28 mm", "±0.02"],
+    ["Outside Ø", "118 mm", "Turned"],
+    ["Length", "86 mm", "±0.05"],
     ["Bore", "Ø42", "H7"],
-    ["Flanks", "Ra 0.8", "After grind"],
+    ["Finish", "Ra 0.8", "After grind"],
     ["Heat treatment", "Carburise", "CHD 0.7 ±0.2 · 58–62 HRC"],
   ]
   return (
     <div className="absolute inset-0 grid grid-cols-[560px_1fr] bg-[#efeae2]">
       <div className="relative m-6">
-        <GearSheet />
+        <PartSheet />
         {callouts.map((item) => (
           <div
             key={item.label}
@@ -318,21 +308,21 @@ function Feasibility({ local }: { local: number }) {
           <CheckCard
             kicker="Material"
             title="20MnCr5 is on the card"
-            detail="Machinable on the lathe and the hobber"
+            detail="Machinable on the lathe and the mill"
             tone="ok"
             style={rise(local, 400)}
           />
           <CheckCard
             kicker="Tolerances"
             title="Bore H7 and Ra 0.8 after carburise"
-            detail="ID grind and gear grind are in the shop"
+            detail="ID grind and OD grind are in the shop"
             tone="ok"
             style={rise(local, 900)}
           />
           <CheckCard
             kicker="Envelope"
-            title="Ø118 fits the hobber"
-            detail="Chuck class covers the pinion"
+            title="Ø118 fits the lathe"
+            detail="Chuck class covers the part"
             tone="ok"
             style={rise(local, 1400)}
           />
@@ -345,7 +335,7 @@ function Feasibility({ local }: { local: number }) {
           <p className="mt-3 text-[16px] font-medium">Carburise is outside</p>
           <p className="mt-2 text-[14px] leading-6 text-[#3c3a36]">
             The shop has no furnace. Quote heat treat as job-work, then grind
-            the bore and the flanks. Finish the keyway before heat treat.
+            the bore and the diameter. Finish the keyway before heat treat.
           </p>
         </div>
       </div>
@@ -412,8 +402,8 @@ function Routing({ local }: { local: number }) {
   return (
     <Report tab="Routing" subtitle="Forged blank · 8 operations">
       <div className="border-b border-[#efeae2] px-4 py-2 text-[13px] text-[#6f6d69]">
-        Stock · forged 20MnCr5 blank, 3.6 kg. Teeth hobbed soft, ground after
-        heat treat.
+        Stock · forged 20MnCr5 blank, 3.6 kg. Turned soft, ground after heat
+        treat.
       </div>
       <RouteTable local={local} />
     </Report>
@@ -506,7 +496,7 @@ function Quote({ local }: { local: number }) {
               <div>
                 <p className="font-mono text-[12px] text-[#6f6d69]">QT-3091</p>
                 <p className="mt-1 text-[20px] font-medium">
-                  Helical pinion HG-1842 Rev B
+                  Custom machined part HG-1842 Rev B
                 </p>
                 <p className="mt-1 text-[14px] text-[#6f6d69]">
                   Vindhya Drives · 80 pcs · ex-works Indore
@@ -523,7 +513,7 @@ function Quote({ local }: { local: number }) {
                     : undefined,
               }}
             >
-              <span>Grind tooth flanks · gear grind</span>
+              <span>Grind the diameter · OD grind</span>
               <span className="font-mono">{grindMin} min</span>
               <span className="text-right font-mono">{grindCost}</span>
             </div>
@@ -532,7 +522,7 @@ function Quote({ local }: { local: number }) {
               style={{ opacity: edited }}
             >
               {edited > 0.55
-                ? "A. Deshmukh set the grind to 7.2 min, from the last similar pinion."
+                ? "A. Deshmukh set the grind to 7.2 min, from the last similar part."
                 : "Estimator is on the grind cycle."}
             </p>
             <div
