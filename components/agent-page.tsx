@@ -60,15 +60,19 @@ export function AgentPage({ agent }: { agent: Agent }) {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="flex flex-col justify-center p-6 md:p-10">
-                <div className="mb-8 flex items-center gap-5">
-                  <span className="flex size-16 shrink-0 items-center justify-center rounded-[2px] border border-rule text-charcoal">
-                    <Icon aria-hidden strokeWidth={1.25} className="size-9" />
+                <div className="mb-8 flex items-center gap-4 md:gap-5">
+                  <span className="flex size-14 shrink-0 items-center justify-center rounded-[2px] border border-rule text-charcoal md:size-16">
+                    <Icon
+                      aria-hidden
+                      strokeWidth={1.25}
+                      className="size-8 md:size-9"
+                    />
                   </span>
-                  <h1 className="font-body text-[clamp(40px,5vw,64px)] leading-[1.05] font-normal tracking-[-0.02em] text-charcoal">
+                  <h1 className="min-w-0 font-body text-[clamp(32px,8vw,40px)] leading-[1.05] font-normal tracking-[-0.02em] text-charcoal max-md:text-balance md:text-[clamp(40px,5vw,64px)]">
                     {agent.label}
                   </h1>
                 </div>
-                <p className="max-w-[600px] border-y border-rule py-4 font-mono text-[13px] leading-[19px] tracking-[0.08em] text-ink-3 uppercase">
+                <p className="max-w-[600px] border-y border-rule py-4 font-mono text-[13px] leading-[19px] tracking-[0.08em] text-pretty text-ink-3 uppercase">
                   {agent.oneLiner}
                 </p>
                 <p className="mt-6 max-w-[600px] text-[clamp(20px,2vw,24px)] leading-snug text-charcoal">
@@ -232,7 +236,7 @@ export function AgentPage({ agent }: { agent: Agent }) {
           <p className="mt-4 max-w-[640px] text-[17px] leading-relaxed text-ink-2 md:text-[19px]">
             Your data stays in its own environment.
           </p>
-          <dl className="mt-8 grid max-w-[720px] grid-cols-[max-content_1fr] gap-x-8 gap-y-3 border-t border-sand pt-6">
+          <dl className="mt-8 grid max-w-[720px] grid-cols-[max-content_minmax(0,1fr)] gap-x-6 gap-y-3 border-t border-sand pt-6 md:gap-x-8">
             <dt className="font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
               Works with
             </dt>

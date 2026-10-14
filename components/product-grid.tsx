@@ -13,7 +13,7 @@ export function ProductGrid() {
 
   return (
     <div>
-      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <ul className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {agents.map((agent) => {
           const Icon = agentIcons[agent.icon]
           const expanded = open === agent.id
@@ -65,7 +65,7 @@ export function ProductGrid() {
                     </svg>
                   </span>
                 </span>
-                <span className="mt-auto pt-4 text-[17px] leading-[22px] font-medium">
+                <span className="mt-auto pt-4 text-[17px] leading-[22px] font-medium max-lg:text-balance">
                   {agent.label}
                 </span>
               </button>

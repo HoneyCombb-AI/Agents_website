@@ -164,7 +164,7 @@ export function Industries() {
         <div
           role="group"
           aria-label="Industry"
-          className="-mx-6 flex [scrollbar-width:none] overflow-x-auto border-t border-rule px-6 md:mx-0 md:grid md:grid-cols-4 md:border-l md:px-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
+          className="grid grid-cols-2 border-t border-l border-rule md:grid-cols-4 lg:grid-cols-6"
         >
           <IndustryTab
             label="All industries"
@@ -318,17 +318,19 @@ function IndustryTab({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className="group relative aspect-[4/3] w-[168px] shrink-0 overflow-hidden border-r border-b border-rule bg-charcoal text-left font-mono text-[13px] tracking-[0.08em] text-ivory uppercase first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:w-auto md:first:border-l-0"
+      className="group relative aspect-[4/3] w-full min-w-0 overflow-hidden border-r border-b border-rule bg-charcoal text-left font-mono text-[13px] tracking-[0.08em] text-ivory uppercase focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
     >
       {image ? (
         <Image
           src={image}
           alt=""
           fill
-          sizes="(min-width: 1024px) 16vw, 168px"
+          sizes="(min-width: 1024px) 16vw, (min-width: 768px) 25vw, 50vw"
           className={cn(
             "object-cover transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none",
-            pressed ? "scale-100 opacity-0" : "scale-100 group-hover:scale-105"
+            pressed
+              ? "scale-100 opacity-0"
+              : "scale-100 group-hover:scale-105 group-active:scale-105"
           )}
         />
       ) : null}
@@ -336,13 +338,17 @@ function IndustryTab({
         aria-hidden
         className={cn(
           "pointer-events-none absolute inset-0 bg-charcoal transition-opacity duration-500 motion-reduce:transition-none",
-          pressed ? "opacity-100" : "opacity-65 group-hover:opacity-20"
+          pressed
+            ? "opacity-100"
+            : "opacity-65 group-hover:opacity-20 group-active:opacity-20"
         )}
       />
       <span
         className={cn(
-          "relative z-10 flex h-full items-end px-3 py-3 transition-colors duration-300 md:px-4 md:py-4",
-          pressed ? "text-ivory" : "text-ivory/80 group-hover:text-ivory"
+          "relative z-10 flex h-full items-end px-3 py-3 transition-colors duration-300 max-md:leading-snug max-md:text-balance md:px-4 md:py-4",
+          pressed
+            ? "text-ivory"
+            : "text-ivory/80 group-hover:text-ivory group-active:text-ivory"
         )}
       >
         {label}

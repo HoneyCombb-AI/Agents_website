@@ -99,18 +99,18 @@ export function DemoPlayer({
   }
 
   return (
-    <figure>
+    <figure className="max-w-full min-w-0">
       <div
         ref={frameRef}
         data-demo-time={Math.round(shown)}
-        className="demo-stage relative aspect-video overflow-hidden bg-[#151515]"
+        className="demo-stage relative aspect-video w-full max-w-full overflow-hidden bg-[#151515]"
       >
         <div
           className="absolute top-0 left-0 origin-top-left"
           style={{
             width: STAGE.w,
             height: STAGE.h,
-            transform: `scale(calc(100cqw / ${STAGE.w}px))`,
+            zoom: `calc(100cqw / ${STAGE.w}px)`,
           }}
         >
           {children(shown)}
