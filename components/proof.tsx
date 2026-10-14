@@ -68,7 +68,7 @@ export function Proof() {
   return (
     <section ref={sectionRef} className="h-auto bg-ivory md:h-[260svh]">
       <div className="py-20 md:sticky md:top-[72px] md:flex md:h-[calc(100svh-72px)] md:items-center md:py-0">
-        <Container className="grid items-start gap-10 md:grid-cols-[280px_1fr] md:gap-16">
+        <Container className="grid items-start gap-10 md:grid-cols-[280px_minmax(0,1fr)] md:gap-16">
           <div>
             <h2 className="font-body text-[clamp(32px,3.4vw,48px)] leading-[1.12] font-normal tracking-[-0.01em] text-charcoal">
               How the work changes.

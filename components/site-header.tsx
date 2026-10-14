@@ -7,7 +7,7 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import { Container } from "@/components/container"
 import { Logo } from "@/components/logo"
 import { Cta } from "@/components/ui/button"
-import { DEMO_MAIL } from "@/lib/content"
+import { agents, DEMO_MAIL } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 const links = [
@@ -47,7 +47,11 @@ export function SiteHeader() {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4">
-        <Link href="/#top" className="shrink-0" aria-label="Honeycomb AI home">
+        <Link
+          href="/#top"
+          className="min-w-0 shrink"
+          aria-label="Honeycomb AI home"
+        >
           <Logo />
         </Link>
 
@@ -84,6 +88,7 @@ export function SiteHeader() {
             className="relative flex size-10 flex-col items-center justify-center gap-[5px] lg:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
             onClick={() => setMenuOpen((open) => !open)}
           >
             <span
@@ -109,21 +114,25 @@ export function SiteHeader() {
       </Container>
 
       <div
+        id="mobile-nav"
         inert={menuOpen ? undefined : true}
         className={cn(
-          "fixed inset-x-0 top-[72px] bottom-0 z-40 overflow-y-auto bg-ivory px-6 py-8 transition duration-300 lg:hidden",
+          "fixed inset-x-0 top-[72px] bottom-0 z-40 overflow-y-auto bg-ivory px-6 py-6 transition duration-300 lg:hidden",
           menuOpen
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0"
         )}
       >
-        <div className="space-y-2">
+        <nav
+          className="mx-auto flex w-full max-w-md flex-col"
+          aria-label="Mobile"
+        >
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-lg text-charcoal"
+              className="border-b border-sand py-3.5 text-lg text-charcoal"
               aria-current={
                 link.href === "/product" && pathname === "/product"
                   ? "page"
@@ -133,10 +142,29 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Cta href={DEMO_MAIL} tone="primary" size="pill" className="mt-4">
+          <p className="pt-6 pb-1 font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
+            Agents
+          </p>
+          {agents.map((agent) => (
+            <Link
+              key={agent.id}
+              href={`/${agent.id}`}
+              onClick={() => setMenuOpen(false)}
+              className="border-b border-sand py-3.5 text-lg text-charcoal"
+              aria-current={pathname === `/${agent.id}` ? "page" : undefined}
+            >
+              {agent.label}
+            </Link>
+          ))}
+          <Cta
+            href={DEMO_MAIL}
+            tone="primary"
+            size="pill"
+            className="mt-6 self-start"
+          >
             Book a demo
           </Cta>
-        </div>
+        </nav>
       </div>
     </header>
   )

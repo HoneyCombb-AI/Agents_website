@@ -167,7 +167,9 @@
 }
 
 .demo-stage {
-  container-type: size;
+  container-type: inline-size;
+  max-width: 100%;
+  overflow: clip;
 }
 
 .font-display {

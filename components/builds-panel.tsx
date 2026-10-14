@@ -48,7 +48,7 @@ export function BuildsPanel() {
   return (
     <section ref={sectionRef} className="h-[220svh] bg-ivory md:h-[250svh]">
       <div className="sticky top-[72px] flex h-[calc(100svh-72px)] items-center">
-        <Container>
+        <Container className="min-w-0">
           <div className="relative">
             <span
               aria-hidden
@@ -71,7 +71,7 @@ export function BuildsPanel() {
               style={{ transform: `scaleX(${frame})` }}
             />
 
-            <div className="relative flex items-center justify-between gap-6 px-4 py-4 md:px-6">
+            <div className="relative flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:px-6">
               <span
                 className="font-mono text-[13px] tracking-[0.08em] text-charcoal uppercase"
                 style={{
