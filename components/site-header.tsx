@@ -47,7 +47,7 @@ export function SiteHeader() {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4">
-        <Link href="/#top" className="shrink-0" aria-label="Honeycomb home">
+        <Link href="/#top" className="shrink-0" aria-label="Honeycomb AI home">
           <Logo />
         </Link>
 

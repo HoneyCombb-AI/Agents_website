@@ -63,7 +63,7 @@ export function Slate({ kicker, title }: { kicker: string; title: string }) {
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#151515] text-[#f3efe7]">
       <Mark className="h-16" />
       <p className="mt-5 font-display text-[18px] tracking-[0.2em]">
-        HONEYCOMB
+        HONEYCOMB AI
       </p>
       <p className="mt-8 font-mono text-[14px] tracking-[0.16em] text-[#f3efe7]/70 uppercase">
         {kicker}
@@ -86,8 +86,11 @@ export function EndCard({
 }) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#151515] text-[#f3efe7]">
-      <Mark className="mb-8 h-14" />
-      <p className="font-mono text-[14px] tracking-[0.16em] text-[#f3efe7]/65 uppercase">
+      <Mark className="h-14" />
+      <p className="mt-5 font-display text-[18px] tracking-[0.2em]">
+        HONEYCOMB AI
+      </p>
+      <p className="mt-8 font-mono text-[14px] tracking-[0.16em] text-[#f3efe7]/65 uppercase">
         {kicker}
       </p>
       <p className="mt-4 text-[56px] leading-none font-medium tracking-[-0.03em]">
@@ -102,8 +105,8 @@ export function BrandLockup() {
   return (
     <div className="flex items-center gap-2 text-[#151515]">
       <Mark className="h-7" />
-      <span className="font-display text-[13px] tracking-[0.16em]">
-        HONEYCOMB
+      <span className="font-display text-[12px] leading-none tracking-[0.1em] whitespace-nowrap">
+        HONEYCOMB AI
       </span>
     </div>
   )

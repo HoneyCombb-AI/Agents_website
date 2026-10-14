@@ -77,26 +77,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div
-          className="mt-20 overflow-hidden text-sand/60"
-          role="img"
-          aria-label="Honeycomb"
-        >
-          <div
-            className="aspect-[1785/219] w-full max-w-[1100px] bg-current"
-            style={{
-              WebkitMaskImage: "url(/wordmark.svg)",
-              maskImage: "url(/wordmark.svg)",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-              WebkitMaskPosition: "left center",
-              maskPosition: "left center",
-              maskMode: "alpha",
-            }}
-          />
-        </div>
+        <p className="mt-16 font-display text-[clamp(32px,6.4vw,88px)] leading-none tracking-[0.06em] text-sand/60">
+          HONEYCOMB AI
+        </p>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-sand pt-6 text-xs text-stone sm:flex-row">
           <p>© 2026 Honeycomb AI. All rights reserved.</p>

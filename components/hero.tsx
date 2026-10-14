@@ -101,7 +101,7 @@ export function Hero() {
           </h1>
           <p className="mt-8 max-w-[40rem] text-[clamp(17px,1.25vw,21px)] leading-[1.5] text-pretty text-cream/85">
             The work still sits in the inbox.
-            <br className="hidden md:block" /> Honeycomb reads the RFQ, the PO,
+            <br className="hidden md:block" /> Honeycomb AI reads the RFQ, the PO,
             and the question, and drafts what your team would send.
           </p>
           <Cta href={DEMO_MAIL} tone="cream" size="pill" className="mt-8">

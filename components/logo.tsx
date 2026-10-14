@@ -24,8 +24,8 @@ export function Logo({ className }: { className?: string }) {
       )}
     >
       <Mark className="h-[26px]" />
-      <span className="font-display text-[15px] leading-none tracking-[0.16em]">
-        HONEYCOMB
+      <span className="font-display text-[15px] leading-none tracking-[0.14em] whitespace-nowrap">
+        HONEYCOMB AI
       </span>
     </span>
   )

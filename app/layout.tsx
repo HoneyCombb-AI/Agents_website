@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s · Honeycomb AI",
   },
   description:
-    "Honeycomb builds AI agents for Indian manufacturers and distributors. Prospecting, quoting, order entry, scheduling, customer service, and AP/AR, inside the ERP you already run.",
+    "Honeycomb AI builds agents for Indian manufacturers and distributors. Prospecting, quoting, order entry, scheduling, customer service, and AP/AR, inside the ERP you already run.",
 }
 
 export default function RootLayout({

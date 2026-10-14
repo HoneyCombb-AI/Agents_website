@@ -16,7 +16,7 @@ export default function NotFound() {
           href="/"
           className="mt-8 inline-block font-mono text-[13px] tracking-[0.08em] text-charcoal uppercase underline underline-offset-4"
         >
-          Back to Honeycomb
+          Back to Honeycomb AI
         </Link>
       </Container>
     </main>

@@ -4,11 +4,11 @@ export function photo(id: string, width = 1600) {
 }
 
 export const DEMO_MAIL =
-  "mailto:ankush@honeycombai.in?subject=Book%20a%20Honeycomb%20demo"
+  "mailto:ankush@honeycombai.in?subject=Book%20a%20Honeycomb%20AI%20demo"
 
 export function demoMail(topic?: string) {
   if (!topic) return DEMO_MAIL
-  const subject = encodeURIComponent(`Honeycomb demo — ${topic}`)
+  const subject = encodeURIComponent(`Honeycomb AI demo — ${topic}`)
   return `mailto:ankush@honeycombai.in?subject=${subject}`
 }
 
@@ -120,14 +120,14 @@ export const agents: Agent[] = [
       "A company it finds can become a quote, then an order. Each agent you add makes that work count twice."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time with sales, learning who you sell to and who you turn away.",
+      "A Honeycomb AI engineer spends time with sales, learning who you sell to and who you turn away.",
       "We build the agent on your parts, your wins, and the accounts your seniors already know.",
       "Your team runs the list beside the way you prospect today. We correct it with you before anyone switches over.",
       "It runs in your CRM. Your data stays where it is. Every correction makes the next list cleaner."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s Prospecting agent work?",
+        q: "How does Honeycomb AI’s Prospecting agent work?",
         a: "It finds companies that buy what you make and drafts the outreach. We build it on your floor, from your parts and the customers you already won, not from a bought list.",
       },
       {
@@ -168,14 +168,14 @@ export const agents: Agent[] = [
       "The quote it drafts is the quote Order Entry will check, and the route is the one Scheduling can place."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time with your estimators, learning how a drawing becomes a route and a price.",
+      "A Honeycomb AI engineer spends time with your estimators, learning how a drawing becomes a route and a price.",
       "We build the agent on your machines, your rates, and the jobs your shop has already run.",
       "Your team runs live drawings through it, beside the way you quote today, until the route is one they would sign.",
       "It drafts in your inbox. Your estimator still reviews the number and hits send."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s Quoting agent work?",
+        q: "How does Honeycomb AI’s Quoting agent work?",
         a: "A drawing comes in. It pulls material, mass, tolerances, gear data, heat treatment, and finish into a spec table, and flags anything it had to assume. It checks the job against your machines, builds the route op by op, puts a cycle time and a setup on each op, and costs material, machining, heat treat, and overheads down to a rupee per piece. Your estimator reviews it.",
       },
       {
@@ -215,14 +215,14 @@ export const agents: Agent[] = [
       "Start with order entry. The quote, the schedule, and the invoice can share what this agent already checked."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time on your floor, learning how a PO becomes a sales order.",
+      "A Honeycomb AI engineer spends time on your floor, learning how a PO becomes a sales order.",
       "We build the agent on your customers, your parts, and the checks your seniors already make.",
       "Your team runs live POs through it, and we tune it with them until it enters the way you do.",
       "It runs inside the system you already use, and the desk gets that time back."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s Order Entry agent work?",
+        q: "How does Honeycomb AI’s Order Entry agent work?",
         a: "It reads each PO, enters the sales order, and drafts the acknowledgment. We build it on your floor, from your customers, your parts, and your order history. Never from a generic template.",
       },
       {
@@ -262,14 +262,14 @@ export const agents: Agent[] = [
       "An order that was just entered is a job it can place. A late casting is a job it will not promise."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time on the floor, learning which machine actually runs which job.",
+      "A Honeycomb AI engineer spends time on the floor, learning which machine actually runs which job.",
       "We build the agent on your work centres, your shifts, and the material rules your planners already use.",
       "Your team runs a live week beside the board you use today. We correct it with them before anyone posts from it.",
       "It posts inside the system you already run, and the whiteboard stops being the only schedule."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s Scheduling agent work?",
+        q: "How does Honeycomb AI’s Scheduling agent work?",
         a: "It checks machines and material and builds the schedule. We build it from your work centres and the way a job actually waits, not from a blank Gantt chart.",
       },
       {
@@ -309,14 +309,14 @@ export const agents: Agent[] = [
       "It can only tell the truth about a job if order entry and scheduling have already touched it."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer reads the mailbox with your team and learns which questions come every week.",
+      "A Honeycomb AI engineer reads the mailbox with your team and learns which questions come every week.",
       "We build the agent on your orders, your ship rules, and the voice your team already writes in.",
       "Your team runs live questions through it, and we tune the replies with them before anyone sends from it.",
       "It drafts inside your inbox, from the live order, including the ones that arrive after the shift."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s Customer Service agent work?",
+        q: "How does Honeycomb AI’s Customer Service agent work?",
         a: "It checks the live order and drafts the reply at any hour. The draft uses the status in your ERP, not a guess from the last email.",
       },
       {
@@ -357,14 +357,14 @@ export const agents: Agent[] = [
       "An order that shipped is an invoice it can draft. A price Order Entry already flagged is a bill it will not quietly pay."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time with accounts, learning how an invoice gets raised and how a supplier bill gets matched.",
+      "A Honeycomb AI engineer spends time with accounts, learning how an invoice gets raised and how a supplier bill gets matched.",
       "We build the agent on your terms, your tax, and the match rules your team already trusts.",
       "Your team runs live invoices and bills through it, and we tune the exceptions with them.",
       "It drafts inside Tally or SAP Business One. Your team approves what posts."
     ),
     faqs: [
       {
-        q: "How does Honeycomb’s AP/AR agent work?",
+        q: "How does Honeycomb AI’s AP/AR agent work?",
         a: "It drafts invoices, flags late payments, and matches supplier invoices to orders. Your team still approves what gets posted.",
       },
       {
@@ -487,12 +487,12 @@ export const steps = [
   {
     n: "01",
     title: "On site",
-    body: "A Honeycomb engineer spends a week on your shop floor, learning how a job moves and where the numbers live.",
+    body: "A Honeycomb AI engineer spends a week on your shop floor, learning how a job moves and where the numbers live.",
   },
   {
     n: "02",
     title: "Build",
-    body: "We build each agent around your drawings, rate cards, and the rules your seniors already carry. No two plants get the same Honeycomb.",
+    body: "We build each agent around your drawings, rate cards, and the rules your seniors already carry. No two plants get the same Honeycomb AI.",
   },
   {
     n: "03",

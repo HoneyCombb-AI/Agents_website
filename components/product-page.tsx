@@ -12,7 +12,7 @@ const steps: AgentStep[] = [
     n: "01",
     title: "On site",
     kicker: "On your floor",
-    body: "A Honeycomb engineer spends time on your floor, learning how your team works, from the first email to the last booking.",
+    body: "A Honeycomb AI engineer spends time on your floor, learning how your team works, from the first email to the last booking.",
   },
   {
     n: "02",
