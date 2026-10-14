@@ -120,6 +120,24 @@ export function Industries() {
     return () => observer.disconnect()
   }, [])
 
+  const [dim, setDim] = useState(false)
+  const dimTimer = useRef(0)
+
+  function choose(id: string | null) {
+    if (id === industryId) return
+    window.clearTimeout(dimTimer.current)
+    setDim(true)
+    dimTimer.current = window.setTimeout(() => {
+      setIndustryId(id)
+      setOpenId(null)
+      setDim(false)
+    }, 140)
+  }
+
+  useEffect(() => {
+    return () => window.clearTimeout(dimTimer.current)
+  }, [])
+
   const industry = industries.find((item) => item.id === industryId) ?? null
   const selected = industry ? industry.agents : null
   const { slots, height } = place(width || 1, selected, openId)
@@ -152,10 +170,7 @@ export function Industries() {
             label="All industries"
             image="/industries/all.jpg"
             pressed={industryId === null}
-            onClick={() => {
-              setIndustryId(null)
-              setOpenId(null)
-            }}
+            onClick={() => choose(null)}
           />
           {industries.map((item) => (
             <IndustryTab
@@ -163,10 +178,7 @@ export function Industries() {
               label={item.label}
               image={item.image}
               pressed={industryId === item.id}
-              onClick={() => {
-                setIndustryId(item.id)
-                setOpenId(null)
-              }}
+              onClick={() => choose(item.id)}
             />
           ))}
         </div>
@@ -190,7 +202,10 @@ export function Industries() {
         </div>
 
         <div className="relative lg:hidden">
-          <ul className="flex flex-col gap-3">
+          <ul
+            key={industryId ?? "all"}
+            className="flex animate-fade-up flex-col gap-3"
+          >
             {(selected
               ? selected
                   .map((id) => agents.find((agent) => agent.id === id))
@@ -247,8 +262,9 @@ export function Industries() {
                       width: slot.w,
                       height: slot.h,
                       transform: `translate(${slot.x}px, ${slot.y}px)`,
+                      opacity: dim ? 0 : 1,
                       transition:
-                        "transform 460ms cubic-bezier(0.2, 0, 0, 1), width 460ms cubic-bezier(0.2, 0, 0, 1), height 460ms cubic-bezier(0.2, 0, 0, 1)",
+                        "transform 460ms cubic-bezier(0.2, 0, 0, 1), width 460ms cubic-bezier(0.2, 0, 0, 1), height 460ms cubic-bezier(0.2, 0, 0, 1), opacity 180ms ease",
                       zIndex: openId === agent.id ? 3 : slot.chip ? 1 : 2,
                     }}
                   >
@@ -302,7 +318,7 @@ function IndustryTab({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className="group relative aspect-[4/3] w-[168px] shrink-0 overflow-hidden border-r border-b border-rule text-left font-mono text-[13px] tracking-[0.08em] text-ivory uppercase first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:w-auto md:first:border-l-0"
+      className="group relative aspect-[4/3] w-[168px] shrink-0 overflow-hidden border-r border-b border-rule bg-charcoal text-left font-mono text-[13px] tracking-[0.08em] text-ivory uppercase first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:w-auto md:first:border-l-0"
     >
       {image ? (
         <Image
@@ -310,17 +326,25 @@ function IndustryTab({
           alt=""
           fill
           sizes="(min-width: 1024px) 16vw, 168px"
-          className="object-cover"
+          className={cn(
+            "object-cover transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none",
+            pressed ? "scale-100 opacity-0" : "scale-100 group-hover:scale-105"
+          )}
         />
       ) : null}
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/88 via-charcoal/50 to-charcoal/30",
-          pressed && "from-charcoal/92 via-charcoal/72 to-charcoal/58"
+          "pointer-events-none absolute inset-0 bg-charcoal transition-opacity duration-500 motion-reduce:transition-none",
+          pressed ? "opacity-100" : "opacity-65 group-hover:opacity-20"
         )}
       />
-      <span className="relative z-10 flex h-full items-end px-3 py-3 md:px-4 md:py-4">
+      <span
+        className={cn(
+          "relative z-10 flex h-full items-end px-3 py-3 transition-colors duration-300 md:px-4 md:py-4",
+          pressed ? "text-ivory" : "text-ivory/80 group-hover:text-ivory"
+        )}
+      >
         {label}
       </span>
     </button>
