@@ -139,7 +139,7 @@ export function Industries() {
             Tell us what you do.
           </h2>
           <p className="max-w-[46rem] text-[19px] leading-7 text-ink-2 lg:text-[clamp(17px,1.7vw,21px)]">
-            Let&apos;s start with the first job to take off the desk.
+            The agents under each industry are the ones that fit.
           </p>
         </div>
 

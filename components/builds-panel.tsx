@@ -88,7 +88,7 @@ export function BuildsPanel() {
                   transform: `translateY(${(1 - labels) * 8}px)`,
                 }}
               >
-                Never from a template
+                Built with your team
               </span>
               <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-hairline" />
             </div>

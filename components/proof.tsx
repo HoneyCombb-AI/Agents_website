@@ -71,7 +71,7 @@ export function Proof() {
         <Container className="grid items-start gap-10 md:grid-cols-[280px_1fr] md:gap-16">
           <div>
             <h2 className="font-body text-[clamp(32px,3.4vw,48px)] leading-[1.12] font-normal tracking-[-0.01em] text-charcoal">
-              On the floor.
+              How the work changes.
             </h2>
             <p className="mt-4 font-mono text-[13px] tracking-[0.08em] text-ink-3 uppercase">
               {index + 1} of {stories.length}
