@@ -113,7 +113,7 @@ export const agents: Agent[] = [
     howBody:
       "It searches for companies that buy what you make, picks who to write to, and drafts the note in your voice. Your team checks the list. And hits send.",
     demoStory:
-      "The agent looks for plants that buy cast pump casings, opens Kaveri Pumps in Hubballi, drafts a note to the buyer, and your team sends it. Sample data.",
+      "The agent reads who already buys your casings, matches four new plants, opens Kaveri Pumps, drafts the note to Priya Rao, and your team sends it from the inbox. Sample data.",
     different: different(
       "We sit with your sales team and build it from the parts you sell and the customers you already won. Not from a list you can buy.",
       "It works in your CRM and your inbox. Your data stays where it is. Mark a fit as wrong, and it remembers.",
@@ -254,7 +254,7 @@ export const agents: Agent[] = [
     howBody:
       "It reads each job, checks which machines and material are free, and builds the schedule. Your team moves what it must. And posts it.",
     demoStory:
-      "The agent checks Lathe 2, the VMC, and the EN24 on the rack, places Deccan Conveyors on the lathe, and holds the job that is short of castings. Your team posts the week. Sample data.",
+      "A rush order for Godavari Drives arrives. The agent checks the ship date, the stock, and the floor, slides four jobs, and your team accepts the week. The grinder terminal picks up the race. Sample data.",
     different: different(
       "We build it from your machines, your shifts, and the way a job actually waits on material. Not from a planning template.",
       "It reads the jobs you already have and posts the schedule where your supervisors look. Your data stays where it is.",
@@ -301,7 +301,7 @@ export const agents: Agent[] = [
     howBody:
       "It reads each question, checks the live order, and drafts the reply your team would send. Your team reviews it. And hits send. The draft is ready at any hour.",
     demoStory:
-      "At 11:42 pm a buyer asks if PO 77318 has shipped. The agent checks Lathe 2, drafts the reply, and your team sends it in the morning. Sample data.",
+      "A ticket arrives asking where PO 44188 is. The agent finds the shipment, the Blue Dart tracking, and a dock date a day early, drafts the reply, and your team sends it. The ticket closes. Sample data.",
     different: different(
       "We build it from the questions your customers actually send, and from the words your team already uses to answer them.",
       "It checks the live order in your ERP before it drafts a word. Your data stays where it is. The draft is waiting at any hour.",
@@ -349,7 +349,7 @@ export const agents: Agent[] = [
     howBody:
       "It drafts the invoice on your terms, flags what is late, and matches each supplier bill to its order. Your team approves the exceptions. And posts them.",
     demoStory:
-      "The agent drafts Deccan Conveyors’ invoice, flags a payment 18 days late, and matches a supplier bill that does not agree on freight. Your team approves the match. Sample data.",
+      "A supplier invoice arrives. The three-way match finds the price off by ₹30,000. Your team sends the query, the revised bill matches, and the payment is scheduled. Sample data.",
     different: different(
       "We build it from your invoice terms, your overdue rules, and the way you match a supplier bill to a purchase order.",
       "It drafts in the books you already keep. Your data stays where it is. Your team still approves what gets posted.",

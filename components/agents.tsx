@@ -131,6 +131,12 @@ export function Agents() {
               <span className="text-charcoal">All industries</span>
             )}
           </p>
+          <Link
+            href="/product"
+            className="mt-4 inline-block font-mono text-[13px] tracking-[0.08em] text-charcoal uppercase underline underline-offset-4 hover:text-ember"
+          >
+            See the product
+          </Link>
         </div>
 
         <div className="home-agents-ctrl flex items-center gap-3">

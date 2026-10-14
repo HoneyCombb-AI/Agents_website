@@ -48,7 +48,7 @@ export function AgentPage({ agent }: { agent: Agent }) {
           <div className="border border-rule">
             <div className="flex items-center justify-between border-b border-rule px-4 py-3.5 md:px-6">
               <Link
-                href="/#agents"
+                href="/product"
                 className="font-mono text-[13px] font-medium tracking-[0.08em] text-ink-3 uppercase transition-colors hover:text-charcoal"
               >
                 <span aria-hidden="true">← </span>
@@ -214,6 +214,12 @@ export function AgentPage({ agent }: { agent: Agent }) {
               )
             })}
           </div>
+          <Link
+            href="/product"
+            className="mt-8 inline-block font-mono text-[13px] tracking-[0.08em] text-charcoal uppercase underline underline-offset-4 hover:text-ember"
+          >
+            See the product
+          </Link>
         </Container>
       </section>
 

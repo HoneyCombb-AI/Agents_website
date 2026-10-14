@@ -560,47 +560,47 @@ export function OrderEntryFilm({ t }: { t: number }) {
           end: 800,
           node: <Slate kicker="Sample data" title="Order entry" />,
         },
-        { id: "inbox", start: 800, end: 4600, node: <Inbox local={t - 800} /> },
+        { id: "inbox", start: 800, end: 4300, node: <Inbox local={t - 800} /> },
         {
           id: "read",
-          start: 4600,
-          end: 10000,
-          node: <Reading local={t - 4600} />,
+          start: 4300,
+          end: 9300,
+          node: <Reading local={t - 4300} />,
         },
         {
           id: "board",
-          start: 10000,
-          end: 13200,
-          node: <Board local={t - 10000} />,
+          start: 9300,
+          end: 12800,
+          node: <Board local={t - 9300} />,
         },
         {
           id: "mismatch",
-          start: 13200,
-          end: 19600,
-          node: <Mismatch local={t - 13200} />,
+          start: 12800,
+          end: 19800,
+          node: <Mismatch local={t - 12800} />,
         },
         {
           id: "ack",
-          start: 19600,
-          end: 25200,
-          node: <Ack local={t - 19600} />,
+          start: 19800,
+          end: 24800,
+          node: <Ack local={t - 19800} />,
         },
         {
           id: "released",
-          start: 25200,
-          end: 28600,
-          node: <Board released local={t - 25200} />,
+          start: 24800,
+          end: 27200,
+          node: <Board released local={t - 24800} />,
         },
         {
           id: "floor",
-          start: 28600,
-          end: 32800,
-          node: <Floor local={t - 28600} />,
+          start: 27200,
+          end: 30200,
+          node: <Floor local={t - 27200} />,
         },
         {
           id: "end",
-          start: 32800,
-          end: 36000,
+          start: 30200,
+          end: 32200,
           node: (
             <EndCard
               kicker="Sent to the floor"
@@ -614,5 +614,5 @@ export function OrderEntryFilm({ t }: { t: number }) {
   )
 }
 
-export const orderEntryDuration = 36000
-export const orderEntryPoster = 15000
+export const orderEntryDuration = 32200
+export const orderEntryPoster = 16000
