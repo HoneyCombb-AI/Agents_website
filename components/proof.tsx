@@ -15,11 +15,11 @@ const stories = [
       "An RFQ package used to take us five or six days. Now we go from RFQ in to quote out in about two hours.",
   },
   {
-    who: "Order entry",
-    where: "Textile mill",
+    who: "Order desk",
+    where: "Textile mill, Mumbai",
     agent: "Order Entry",
     quote:
-      "Each PO took us twenty to thirty minutes, and we handle fifty or sixty a day. That was a lot of the day gone. Now orders go in accurately and fast, and the whole process just runs.",
+      "Each PO used to take us 20 to 30 minutes to turn into a PI. Now our PIs come out accurate and super fast. The whole process just runs.",
   },
   {
     who: "Sales lead",
