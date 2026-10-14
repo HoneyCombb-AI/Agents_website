@@ -9,17 +9,17 @@ import { cn } from "@/lib/utils"
 const stories = [
   {
     who: "Estimator",
-    where: "Build-to-print shop, Pune",
+    where: "Custom manufacturer, Pune",
     agent: "Quoting",
     quote:
-      "The drawing used to wait until someone had an hour. Now the route and the price are drafted the same morning, and the estimator changes one line before it goes out.",
+      "An RFQ package used to take us five or six days. Now we go from RFQ in to quote out in about two hours.",
   },
   {
-    who: "Planner",
-    where: "Textile mill, Coimbatore",
-    agent: "Scheduling",
+    who: "Order entry",
+    where: "Textile mill",
+    agent: "Order Entry",
     quote:
-      "A rush order used to mean a whiteboard and a late night. The board now shows what moves, and the floor accepts it before the shift changes.",
+      "Each PO took us twenty to thirty minutes, and we handle fifty or sixty a day. That was a lot of the day gone. Now orders go in accurately and fast, and the whole process just runs.",
   },
   {
     who: "Sales lead",
