@@ -1,37 +1,14 @@
 "use client"
 
 import Image from "next/image"
-import {
-  BookOpen,
-  CalendarClock,
-  ClipboardCheck,
-  IndianRupee,
-  MessagesSquare,
-  ReceiptText,
-  type LucideIcon,
-} from "lucide-react"
+import Link from "next/link"
 import type { KeyboardEvent } from "react"
 
+import { agentIcons } from "@/components/agent-icons"
 import { Container } from "@/components/container"
 import { useSite } from "@/components/site-state"
-import {
-  agents,
-  agentsFor,
-  demoMail,
-  industries,
-  type Agent,
-  type AgentIcon,
-} from "@/lib/content"
+import { agents, agentsFor, industries, type Agent } from "@/lib/content"
 import { cn } from "@/lib/utils"
-
-const icons: Record<AgentIcon, LucideIcon> = {
-  quote: IndianRupee,
-  order: ClipboardCheck,
-  schedule: CalendarClock,
-  follow: MessagesSquare,
-  invoice: ReceiptText,
-  catalogue: BookOpen,
-}
 
 function signedDistance(index: number, active: number, total: number) {
   let distance = index - active
@@ -40,16 +17,8 @@ function signedDistance(index: number, active: number, total: number) {
   return distance
 }
 
-function AgentCard({
-  agent,
-  active,
-  onSelect,
-}: {
-  agent: Agent
-  active: boolean
-  onSelect: () => void
-}) {
-  const Icon = icons[agent.icon]
+function AgentCard({ agent, active }: { agent: Agent; active: boolean }) {
+  const Icon = agentIcons[agent.icon]
   const className = cn(
     "relative isolate overflow-hidden border border-hairline bg-charcoal text-ivory transition-all duration-500 ease-out",
     active
@@ -81,20 +50,16 @@ function AgentCard({
     </>
   )
 
-  if (!active) {
-    return (
-      <button
-        type="button"
-        onClick={onSelect}
-        aria-label={`Show ${agent.label}`}
-        className={className}
-      >
-        {inner}
-      </button>
-    )
-  }
-
-  return <div className={className}>{inner}</div>
+  return (
+    <Link
+      href={`/${agent.id}`}
+      aria-label={`${agent.label}. ${agent.oneLiner}`}
+      aria-current={active ? "true" : undefined}
+      className={className}
+    >
+      {inner}
+    </Link>
+  )
 }
 
 export function Agents() {
@@ -215,47 +180,34 @@ export function Agents() {
           <div className="grid grid-cols-1 items-start lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
             <div className="hidden items-start justify-end gap-8 lg:flex xl:gap-10">
               {left.map(({ agent }) => (
-                <AgentCard
-                  key={agent.id}
-                  agent={agent}
-                  active={false}
-                  onSelect={() => selectAgent(agent.id)}
-                />
+                <AgentCard key={agent.id} agent={agent} active={false} />
               ))}
             </div>
             <div className="flex justify-center px-6 lg:px-0">
-              <AgentCard agent={active} active onSelect={() => undefined} />
+              <AgentCard agent={active} active />
             </div>
             <div className="hidden items-start justify-start gap-8 lg:flex xl:gap-10">
               {right.map(({ agent }) => (
-                <AgentCard
-                  key={agent.id}
-                  agent={agent}
-                  active={false}
-                  onSelect={() => selectAgent(agent.id)}
-                />
+                <AgentCard key={agent.id} agent={agent} active={false} />
               ))}
             </div>
           </div>
 
           <div className="mx-auto mt-8 w-full max-w-[420px] px-6 lg:w-[calc(var(--ch)*0.8)] lg:max-w-none lg:px-0">
             <h3 className="font-body text-2xl leading-[30px] font-medium text-charcoal">
-              {active.heading}
+              <Link href={`/${active.id}`} className="hover:text-ember">
+                {active.heading}
+              </Link>
             </h3>
             <p className="mt-3 text-[19px] leading-[29px] text-ink-2">
               {active.body}
             </p>
-            {active.stat ? (
-              <p className="mt-4 font-mono text-[12px] tracking-[0.12em] text-stone uppercase">
-                {active.stat}
-              </p>
-            ) : null}
-            <a
-              href={demoMail(active.label)}
+            <Link
+              href={`/${active.id}#how-it-works`}
               className="mt-5 inline-block font-mono text-[15px] tracking-[0.08em] text-charcoal uppercase underline underline-offset-4 transition-colors hover:text-ember"
             >
               See it work
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -13,10 +13,26 @@ export function demoMail(topic?: string) {
 }
 
 export type AgentId =
-  "quoting" | "orders" | "scheduling" | "followups" | "invoicing" | "catalogue"
+  | "prospecting"
+  | "quoting"
+  | "order-entry"
+  | "scheduling"
+  | "customer-service"
+  | "ap-ar"
 
 export type AgentIcon =
-  "quote" | "order" | "schedule" | "follow" | "invoice" | "catalogue"
+  "prospect" | "quote" | "order" | "schedule" | "service" | "ledger"
+
+export type AgentPoint = { title: string; body: string }
+
+export type AgentStep = {
+  n: string
+  title: string
+  kicker: string
+  body: string
+}
+
+export type AgentFaq = { q: string; a: string }
 
 export type Agent = {
   id: AgentId
@@ -25,29 +41,203 @@ export type Agent = {
   label: string
   heading: string
   body: string
-  stat?: string
   image: string
+  oneLiner: string
+  promise: string
+  howTitle: string
+  howBody: string
+  demoStory: string
+  different: AgentPoint[]
+  steps: AgentStep[]
+  faqs: AgentFaq[]
+  cta: string
+}
+
+const different = (
+  built: string,
+  systems: string,
+  together: string
+): AgentPoint[] => [
+  { title: "Built for you", body: built },
+  { title: "On your systems", body: systems },
+  { title: "Better with every agent", body: together },
+]
+
+function buildSteps(
+  learn: string,
+  build: string,
+  beta: string,
+  live: string
+): AgentStep[] {
+  return [
+    {
+      n: "01",
+      title: "On site",
+      kicker: "On your floor",
+      body: learn,
+    },
+    {
+      n: "02",
+      title: "Build",
+      kicker: "With your team",
+      body: build,
+    },
+    {
+      n: "03",
+      title: "Beta",
+      kicker: "On live work",
+      body: beta,
+    },
+    {
+      n: "04",
+      title: "Live",
+      kicker: "In your system",
+      body: live,
+    },
+  ]
 }
 
 export const agents: Agent[] = [
+  {
+    id: "prospecting",
+    icon: "prospect",
+    group: "Sales",
+    label: "Prospecting",
+    heading: "Accounts, found.",
+    body: "Finds companies that buy what you make and drives the outreach.",
+    image: photo("1586528116311-ad8dd3c8310d", 1400),
+    oneLiner: "Finds companies that buy what you make and drives the outreach.",
+    promise:
+      "Your Prospecting agent looks for the plants that buy what you make.",
+    howTitle: "From the market to the first note.",
+    howBody:
+      "It searches for companies that buy what you make, picks who to write to, and drafts the note in your voice. Your team checks the list. And hits send.",
+    demoStory:
+      "The agent looks for plants that buy cast pump casings, opens Kaveri Pumps in Hubballi, drafts a note to the buyer, and your team sends it. Sample data.",
+    different: different(
+      "We sit with your sales team and build it from the parts you sell and the customers you already won. Not from a list you can buy.",
+      "It works in your CRM and your inbox. Your data stays where it is. Mark a fit as wrong, and it remembers.",
+      "A company it finds can become a quote, then an order. Each agent you add makes that work count twice."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer spends time with sales, learning who you sell to and who you turn away.",
+      "We build the agent on your parts, your wins, and the accounts your seniors already know.",
+      "Your team runs the list beside the way you prospect today. We correct it with you before anyone switches over.",
+      "It runs in your CRM. Your data stays where it is. Every correction makes the next list cleaner."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s Prospecting agent work?",
+        a: "It finds companies that buy what you make and drafts the outreach. We build it on your floor, from your parts and the customers you already won, not from a bought list.",
+      },
+      {
+        q: "How do you build my Prospecting agent?",
+        a: "On your floor, with your team, in four steps. We learn who you sell to, build the agent on those accounts, run it beside the way you prospect today, and then let it work in your CRM.",
+      },
+      {
+        q: "Does it work with my CRM?",
+        a: "Yes. It works in your CRM and your inbox, including Zoho, LeadSquared, HubSpot, Salesforce, Gmail, and Outlook. Your data stays where it is.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "A company it finds can go straight to Quoting. Each agent shares what the others know, so the list is worth more once quotes and orders are in the same place.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your Prospecting agent.",
+  },
   {
     id: "quoting",
     icon: "quote",
     group: "Sales",
     label: "Quoting",
     heading: "Quotes, sent.",
-    body: "A customer drawing comes in. Honeycomb reads the geometry, checks feasibility, routes the job, and prices cycle time and cost.",
-    stat: "Early customers · 4–5 days to ~2 hours",
+    body: "Reads each RFQ, estimates the job the way your team would, and drafts the quote.",
     image: photo("1565043589221-1a6fd9ae45c7", 1400),
+    oneLiner:
+      "Reads each RFQ, estimates the job the way your team would, and drafts the quote.",
+    promise: "Your Quoting agent prices the way your estimators price.",
+    howTitle: "From the RFQ to the quote.",
+    howBody:
+      "It reads each RFQ, plans the operations, and prices cycle time and material the way your shop would. Your team checks the number. And hits send.",
+    demoStory:
+      "An RFQ arrives from Sagar Hydraulics. The agent plans the housing and the shaft, prices them from the rate card, and drafts quote QT-1842. Your team sends it. Sample data.",
+    different: different(
+      "We build it on your floor, from your rate card, your machines, and the jobs you have already run. Never from a book of standard minutes.",
+      "It reads the RFQ in your inbox and prices the way your estimators do. Your data stays where it is. Correct a rate, and the next quote uses it.",
+      "The quote it drafts is the quote Order Entry will check. Start here, or add it once the orders are already flowing."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer spends time with your estimators, learning how a drawing becomes a price.",
+      "We build the agent on your rate card, your past jobs, and the rules your seniors already carry.",
+      "Your team runs live RFQs through it, and we tune it with them until it quotes the way you do.",
+      "It runs in your inbox and your ERP. Your data stays where it is. Every correction makes the next quote cleaner."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s Quoting agent work?",
+        a: "It reads each RFQ, estimates the job the way your team would, and drafts the quote. We build it from your rate card and the jobs you have actually run.",
+      },
+      {
+        q: "How do you build my Quoting agent?",
+        a: "On your floor, with your estimators, in four steps. We learn how you price, build the agent on that rate card, test it on live RFQs, and then let it draft inside the tools you already use.",
+      },
+      {
+        q: "Does it work with my ERP?",
+        a: "Yes. It works with your ERP, your CRM, and your inbox. Tally, SAP Business One, Busy, Zoho, Gmail, and Outlook are the usual set. Your data stays where it is.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "Order Entry checks the next PO against the quote this agent drafted. Scheduling can see the operations. Each one makes the quote worth more than a PDF in a sent folder.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your Quoting agent.",
   },
   {
-    id: "orders",
+    id: "order-entry",
     icon: "order",
     group: "Sales",
-    label: "Order entry",
+    label: "Order Entry",
     heading: "Orders, posted.",
-    body: "Reads the purchase order in the inbox and enters the sales order in Tally or SAP Business One.",
-    image: photo("1586528116311-ad8dd3c8310d", 1400),
+    body: "Reads each PO, enters the sales order, and drafts the acknowledgment.",
+    image: photo("1581091226825-a6a2a5aee158", 1400),
+    oneLiner:
+      "Reads each PO, enters the sales order, and drafts the acknowledgment.",
+    promise: "Your Order Entry agent enters orders the way your team would.",
+    howTitle: "From the inbox to the sales order.",
+    howBody:
+      "It reads each PO, checks every line against the quote, and drafts the reply the way your team would. Your team reviews what is off. And hits send.",
+    demoStory:
+      "Two purchase orders land in the inbox. The agent checks every line against the quote and flags the price that does not match. Your team sends that reply, enters the other order, and sends the acknowledgment. The job goes to the floor, and the operator starts it. Sample data.",
+    different: different(
+      "We build it on your floor, from your customers, your parts, and the orders already on your books. Never from a generic order form.",
+      "It reads the PO in your inbox and enters the sales order in Tally or SAP Business One. Your data stays where it is. Correct a line, and it holds that the way a new hire would.",
+      "Start with order entry. The quote, the schedule, and the invoice can share what this agent already checked."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer spends time on your floor, learning how a PO becomes a sales order.",
+      "We build the agent on your customers, your parts, and the checks your seniors already make.",
+      "Your team runs live POs through it, and we tune it with them until it enters the way you do.",
+      "It runs inside the system you already use, and the desk gets that time back."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s Order Entry agent work?",
+        a: "It reads each PO, enters the sales order, and drafts the acknowledgment. We build it on your floor, from your customers, your parts, and your order history. Never from a generic template.",
+      },
+      {
+        q: "How do you build my Order Entry agent?",
+        a: "On your floor, with your team, in four steps. We learn how you enter orders, build the agent on your customers and parts, run live POs through it with you, and then let it work in your system.",
+      },
+      {
+        q: "Does my Order Entry agent work with my ERP?",
+        a: "Yes. It works in your ERP, your CRM, and your inbox. Your data stays in its own environment, and the agent learns when your team corrects a line.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "Start with Order Entry and add agents as you grow. Quoting, scheduling, customer service, and AP/AR share what this agent already checked, so the time you get back compounds.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your Order Entry agent.",
   },
   {
     id: "scheduling",
@@ -55,35 +245,141 @@ export const agents: Agent[] = [
     group: "Production",
     label: "Scheduling",
     heading: "The floor, sequenced.",
-    body: "Lines each job up against the machines, material, and operators that are actually free.",
+    body: "Checks machines and material and builds the schedule.",
     image: photo("1513828583688-c52646db42da", 1400),
+    oneLiner: "Checks machines and material and builds the schedule.",
+    promise:
+      "Your Scheduling agent builds the week from the machines and metal you actually have.",
+    howTitle: "From the job to the machine.",
+    howBody:
+      "It reads each job, checks which machines and material are free, and builds the schedule. Your team moves what it must. And posts it.",
+    demoStory:
+      "The agent checks Lathe 2, the VMC, and the EN24 on the rack, places Deccan Conveyors on the lathe, and holds the job that is short of castings. Your team posts the week. Sample data.",
+    different: different(
+      "We build it from your machines, your shifts, and the way a job actually waits on material. Not from a planning template.",
+      "It reads the jobs you already have and posts the schedule where your supervisors look. Your data stays where it is.",
+      "An order that was just entered is a job it can place. A late casting is a job it will not promise."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer spends time on the floor, learning which machine actually runs which job.",
+      "We build the agent on your work centres, your shifts, and the material rules your planners already use.",
+      "Your team runs a live week beside the board you use today. We correct it with them before anyone posts from it.",
+      "It posts inside the system you already run, and the whiteboard stops being the only schedule."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s Scheduling agent work?",
+        a: "It checks machines and material and builds the schedule. We build it from your work centres and the way a job actually waits, not from a blank Gantt chart.",
+      },
+      {
+        q: "How do you build my Scheduling agent?",
+        a: "On your floor, with your planners, in four steps. We learn the machines and the material rules, build the agent on them, run a live week beside your current board, and then let it post.",
+      },
+      {
+        q: "Does it work with my ERP?",
+        a: "Yes. It reads open orders and stock from your ERP and posts the schedule back. Your data stays where it is.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "Order Entry hands it a sales order. Customer Service can then answer from the live machine, not from last week’s promise.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your Scheduling agent.",
   },
   {
-    id: "followups",
-    icon: "follow",
+    id: "customer-service",
+    icon: "service",
     group: "Sales",
-    label: "Follow-ups",
-    heading: "The thread, continued.",
-    body: "Drafts the chase on an open quote and the reply on order status, from live data, in your voice.",
-    image: photo("1581091226825-a6a2a5aee158", 1400),
+    label: "Customer Service",
+    heading: "Replies, drafted.",
+    body: "Checks the live order and drafts the reply at any hour.",
+    image: photo("1581092918056-0c4c3acd3789", 1400),
+    oneLiner: "Checks the live order and drafts the reply at any hour.",
+    promise:
+      "Your Customer Service agent answers from the live order, at any hour.",
+    howTitle: "From the question to the reply.",
+    howBody:
+      "It reads each question, checks the live order, and drafts the reply your team would send. Your team reviews it. And hits send. The draft is ready at any hour.",
+    demoStory:
+      "At 11:42 pm a buyer asks if PO 77318 has shipped. The agent checks Lathe 2, drafts the reply, and your team sends it in the morning. Sample data.",
+    different: different(
+      "We build it from the questions your customers actually send, and from the words your team already uses to answer them.",
+      "It checks the live order in your ERP before it drafts a word. Your data stays where it is. The draft is waiting at any hour.",
+      "It can only tell the truth about a job if order entry and scheduling have already touched it."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer reads the mailbox with your team and learns which questions come every week.",
+      "We build the agent on your orders, your ship rules, and the voice your team already writes in.",
+      "Your team runs live questions through it, and we tune the replies with them before anyone sends from it.",
+      "It drafts inside your inbox, from the live order, including the ones that arrive after the shift."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s Customer Service agent work?",
+        a: "It checks the live order and drafts the reply at any hour. The draft uses the status in your ERP, not a guess from the last email.",
+      },
+      {
+        q: "How do you build my Customer Service agent?",
+        a: "On your floor, with the people who answer the mailbox, in four steps. We learn the questions, build the agent on your orders and your voice, test it on live mail, and then let it draft.",
+      },
+      {
+        q: "Does it send mail on its own?",
+        a: "It drafts. Your team hits send. The draft is ready when the question arrives, including overnight.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "Scheduling tells it which machine the job is on. Order Entry tells it the acknowledgment that already went out. The reply gets more specific as you add agents.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your Customer Service agent.",
   },
   {
-    id: "invoicing",
-    icon: "invoice",
+    id: "ap-ar",
+    icon: "ledger",
     group: "Finance",
-    label: "Invoicing",
+    label: "AP/AR",
     heading: "Invoices, raised.",
-    body: "Builds the invoice on your terms, flags what is late, and matches each supplier bill to its order.",
+    body: "Drafts invoices, flags late payments, and matches supplier invoices to orders.",
     image: photo("1567789884554-0b844b597180", 1400),
-  },
-  {
-    id: "catalogue",
-    icon: "catalogue",
-    group: "Sales",
-    label: "Catalogue",
-    heading: "Lines, priced.",
-    body: "Quotes a distributor line from the live catalogue, with your breaks, tax, and what is actually in stock.",
-    image: photo("1587293852726-70cdb56c2866", 1400),
+    oneLiner:
+      "Drafts invoices, flags late payments, and matches supplier invoices to orders.",
+    promise:
+      "Your AP/AR agent keeps the invoice, the receipt, and the supplier bill in one pass.",
+    howTitle: "From the shipment to the books.",
+    howBody:
+      "It drafts the invoice on your terms, flags what is late, and matches each supplier bill to its order. Your team approves the exceptions. And posts them.",
+    demoStory:
+      "The agent drafts Deccan Conveyors’ invoice, flags a payment 18 days late, and matches a supplier bill that does not agree on freight. Your team approves the match. Sample data.",
+    different: different(
+      "We build it from your invoice terms, your overdue rules, and the way you match a supplier bill to a purchase order.",
+      "It drafts in the books you already keep. Your data stays where it is. Your team still approves what gets posted.",
+      "An order that shipped is an invoice it can draft. A price Order Entry already flagged is a bill it will not quietly pay."
+    ),
+    steps: buildSteps(
+      "A Honeycomb engineer spends time with accounts, learning how an invoice gets raised and how a supplier bill gets matched.",
+      "We build the agent on your terms, your tax, and the match rules your team already trusts.",
+      "Your team runs live invoices and bills through it, and we tune the exceptions with them.",
+      "It drafts inside Tally or SAP Business One. Your team approves what posts."
+    ),
+    faqs: [
+      {
+        q: "How does Honeycomb’s AP/AR agent work?",
+        a: "It drafts invoices, flags late payments, and matches supplier invoices to orders. Your team still approves what gets posted.",
+      },
+      {
+        q: "How do you build my AP/AR agent?",
+        a: "On your floor, with accounts, in four steps. We learn your terms and match rules, build the agent on them, run live bills through it with you, and then let it draft in the books you keep.",
+      },
+      {
+        q: "Does it work with Tally or SAP Business One?",
+        a: "Yes. It works in the ERP you already run, including Tally and SAP Business One, and it reads the inbox the bills arrive in. Your data stays where it is.",
+      },
+      {
+        q: "What happens when I add more agents?",
+        a: "Order Entry has already checked the price. Scheduling knows what shipped. The invoice and the supplier match start from that, instead of from a retyped sheet.",
+      },
+    ],
+    cta: "Spend your hours where they count. Start with your AP/AR agent.",
   },
 ]
 
@@ -100,77 +396,77 @@ export const industries: Industry[] = [
     id: "machining",
     label: "Precision machining",
     short: "Machining",
-    agents: ["quoting", "orders", "scheduling", "invoicing"],
+    agents: ["quoting", "order-entry", "scheduling", "ap-ar"],
     image: photo("1565043589221-1a6fd9ae45c7", 900),
   },
   {
     id: "gears",
     label: "Gears",
     short: "Gears",
-    agents: ["quoting", "orders", "scheduling", "followups"],
+    agents: ["quoting", "order-entry", "scheduling", "customer-service"],
     image: photo("1581092918056-0c4c3acd3789", 900),
   },
   {
     id: "castings",
     label: "Castings & forgings",
     short: "Castings",
-    agents: ["quoting", "scheduling", "invoicing", "followups"],
+    agents: ["quoting", "scheduling", "ap-ar", "prospecting"],
     image: photo("1504328345606-18bbc8c9d7d1", 900),
   },
   {
     id: "automotive",
     label: "Automotive components",
     short: "Automotive",
-    agents: ["quoting", "orders", "invoicing", "scheduling"],
+    agents: ["quoting", "order-entry", "ap-ar", "scheduling"],
     image: photo("1619642751034-765dfdf7c58e", 900),
   },
   {
     id: "aerospace",
     label: "Aerospace",
     short: "Aerospace",
-    agents: ["quoting", "orders", "invoicing", "followups"],
+    agents: ["quoting", "order-entry", "ap-ar", "customer-service"],
     image: photo("1540962351504-03099e0a754b", 900),
   },
   {
     id: "textiles",
     label: "Textiles & yarn",
     short: "Textiles",
-    agents: ["catalogue", "orders", "invoicing", "scheduling"],
+    agents: ["quoting", "order-entry", "ap-ar", "scheduling"],
     image: photo("1558618666-fcd25c85cd64", 900),
   },
   {
     id: "electrical",
     label: "Electrical distribution",
     short: "Electrical",
-    agents: ["catalogue", "orders", "invoicing", "followups"],
+    agents: ["quoting", "order-entry", "ap-ar", "customer-service"],
     image: photo("1581092334651-ddf26d9a09d0", 900),
   },
   {
     id: "supply",
     label: "Industrial supply",
     short: "Industrial supply",
-    agents: ["catalogue", "quoting", "orders", "followups"],
+    agents: ["prospecting", "quoting", "order-entry", "customer-service"],
     image: photo("1586528116311-ad8dd3c8310d", 900),
   },
   {
     id: "fasteners",
     label: "Fasteners",
     short: "Fasteners",
-    agents: ["catalogue", "quoting", "orders", "invoicing"],
+    agents: ["prospecting", "quoting", "order-entry", "ap-ar"],
     image: photo("1581092162384-8987c1d64718", 900),
   },
   {
     id: "bearings",
     label: "Bearings",
     short: "Bearings",
-    agents: ["catalogue", "quoting", "followups", "orders"],
+    agents: ["prospecting", "quoting", "customer-service", "order-entry"],
     image: photo("1504917595217-d4dc5ebe6122", 900),
   },
   {
     id: "plastics",
     label: "Plastics & packaging",
     short: "Plastics",
-    agents: ["quoting", "catalogue", "scheduling", "orders"],
+    agents: ["quoting", "prospecting", "scheduling", "order-entry"],
     image: photo("1581094794329-c8112a89af12", 900),
   },
 ]
@@ -178,10 +474,10 @@ export const industries: Industry[] = [
 export const heroWords = [
   "QUOTES.",
   "ORDERS.",
+  "SCHEDULES.",
+  "OUTREACH.",
+  "REPLIES.",
   "INVOICES.",
-  "RFQs.",
-  "SCHEDULING.",
-  "ERP.",
 ]
 
 export const heroImage = photo("1553413077-190dd305871c", 2400)
@@ -240,11 +536,15 @@ export function agentsFor(industryId: string | null) {
   return agents.filter((agent) => industry.agents.includes(agent.id))
 }
 
+export function getAgent(slug: string) {
+  return agents.find((agent) => agent.id === slug)
+}
+
 export const navGroups: { label: string; ids: AgentId[] }[] = [
   {
     label: "Sales",
-    ids: ["quoting", "orders", "catalogue", "followups"],
+    ids: ["prospecting", "quoting", "order-entry", "customer-service"],
   },
   { label: "Production", ids: ["scheduling"] },
-  { label: "Finance", ids: ["invoicing"] },
+  { label: "Finance", ids: ["ap-ar"] },
 ]

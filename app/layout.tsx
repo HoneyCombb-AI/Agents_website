@@ -29,9 +29,12 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Honeycomb AI — Automate your quotes",
+  title: {
+    default: "Honeycomb AI — Agents for Indian manufacturers",
+    template: "%s · Honeycomb AI",
+  },
   description:
-    "Honeycomb builds AI agents for Indian manufacturers and distributors. A customer drawing goes in and a priced quote comes out. Orders post into Tally and SAP Business One.",
+    "Honeycomb builds AI agents for Indian manufacturers and distributors. Prospecting, quoting, order entry, scheduling, customer service, and AP/AR, inside the ERP you already run.",
 }
 
 export default function RootLayout({

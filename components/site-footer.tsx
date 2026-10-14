@@ -1,23 +1,15 @@
-"use client"
+import Link from "next/link"
 
 import { Container } from "@/components/container"
 import { Logo } from "@/components/logo"
-import { useSite } from "@/components/site-state"
-import { agents, DEMO_MAIL, type AgentId } from "@/lib/content"
+import { agents, DEMO_MAIL } from "@/lib/content"
 
 const columns = [
   {
-    title: "Solutions",
-    links: agents.map((agent) => ({
-      label: agent.label,
-      href: `#agents`,
-    })),
-  },
-  {
     title: "Company",
     links: [
-      { label: "About", href: "#about" },
-      { label: "How it works", href: "#process" },
+      { label: "About", href: "/#about" },
+      { label: "How it works", href: "/#process" },
     ],
   },
   {
@@ -27,13 +19,6 @@ const columns = [
 ]
 
 export function SiteFooter() {
-  const { selectAgent } = useSite()
-
-  function openAgent(id: AgentId) {
-    selectAgent(id)
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
     <footer id="about" className="scroll-mt-24 border-t border-sand bg-cream">
       <Container className="py-20">
@@ -41,9 +26,9 @@ export function SiteFooter() {
           <div className="md:col-span-3">
             <Logo />
             <p className="mt-4 max-w-[280px] text-sm leading-6 text-stone">
-              AI agents for Indian manufacturers and distributors. Quoting from
-              the drawing, order entry, invoicing, catalogue pricing,
-              follow-ups, and scheduling, inside the ERP you already run.
+              AI agents for Indian manufacturers and distributors. Prospecting,
+              quoting, order entry, scheduling, customer service, and AP/AR,
+              inside the ERP you already run.
             </p>
             <p className="mt-4 text-xs leading-5 text-stone">Bangalore</p>
             <p className="mt-3 text-xs leading-5 text-stone">
@@ -52,34 +37,39 @@ export function SiteFooter() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3 md:col-span-5">
+            <div>
+              <p className="font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
+                Solutions
+              </p>
+              <ul className="mt-4">
+                {agents.map((agent) => (
+                  <li key={agent.id}>
+                    <Link
+                      href={`/${agent.id}`}
+                      className="inline-block py-1.5 text-sm text-graphite transition-colors hover:text-charcoal md:py-1"
+                    >
+                      {agent.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
             {columns.map((column) => (
               <div key={column.title}>
                 <p className="font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
                   {column.title}
                 </p>
                 <ul className="mt-4">
-                  {column.title === "Solutions"
-                    ? agents.map((agent) => (
-                        <li key={agent.id}>
-                          <button
-                            type="button"
-                            onClick={() => openAgent(agent.id)}
-                            className="inline-block py-1.5 text-sm text-graphite transition-colors hover:text-charcoal md:py-1"
-                          >
-                            {agent.label}
-                          </button>
-                        </li>
-                      ))
-                    : column.links.map((link) => (
-                        <li key={link.label}>
-                          <a
-                            href={link.href}
-                            className="inline-block py-1.5 text-sm text-graphite transition-colors hover:text-charcoal md:py-1"
-                          >
-                            {link.label}
-                          </a>
-                        </li>
-                      ))}
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        className="inline-block py-1.5 text-sm text-graphite transition-colors hover:text-charcoal md:py-1"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}

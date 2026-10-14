@@ -143,6 +143,10 @@
   --ch: min(500px, 58vh);
 }
 
+.demo-stage {
+  container-type: size;
+}
+
 .font-display {
   font-synthesis: none;
 }

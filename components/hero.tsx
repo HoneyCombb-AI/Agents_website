@@ -79,7 +79,7 @@ export function Hero() {
           </p>
           <h1 className="mt-6 max-w-[14ch] font-display text-[min(7vw,12.5svh,calc((100vw-48px)/11.1),120px)] leading-[1.02] font-normal tracking-[0.005em] text-cream sm:max-w-none">
             <span className="sr-only">
-              Automate your quotes, orders, and ERP.
+              Automate your quotes, orders, schedules, and invoices.
             </span>
             <span aria-hidden className="block">
               AUTOMATE
@@ -100,9 +100,9 @@ export function Hero() {
             </span>
           </h1>
           <p className="mt-8 max-w-[40rem] text-[clamp(17px,1.25vw,21px)] leading-[1.5] text-pretty text-cream/85">
-            Estimators still rebuild every price from a drawing and a rate card.
-            <br className="hidden md:block" /> Honeycomb reads the drawing and
-            drafts the quote, the order, and the invoice.
+            The work still sits in the inbox.
+            <br className="hidden md:block" /> Honeycomb reads the RFQ, the PO,
+            and the question, and drafts what your team would send.
           </p>
           <Cta href={DEMO_MAIL} tone="cream" size="pill" className="mt-8">
             Book a demo

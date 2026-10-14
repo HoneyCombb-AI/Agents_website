@@ -1,16 +1,19 @@
 "use client"
 
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { Container } from "@/components/container"
 import { Logo } from "@/components/logo"
 import { useSite } from "@/components/site-state"
 import { Cta } from "@/components/ui/button"
-import { agents, DEMO_MAIL, navGroups, type AgentId } from "@/lib/content"
+import { agents, DEMO_MAIL, navGroups } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
-  const { selectAgent, selectIndustry } = useSite()
+  const pathname = usePathname()
+  const { selectIndustry } = useSite()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [agentsOpen, setAgentsOpen] = useState(false)
@@ -29,18 +32,15 @@ export function SiteHeader() {
     }
   }, [menuOpen])
 
-  function goToAgent(id: AgentId) {
-    selectAgent(id)
+  function closeMenus() {
     setMenuOpen(false)
     setAgentsOpen(false)
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" })
   }
 
   function goToAll() {
     selectIndustry(null)
     setMenuOpen(false)
     setAgentsOpen(false)
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
@@ -53,9 +53,9 @@ export function SiteHeader() {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4">
-        <a href="#top" className="shrink-0" aria-label="Honeycomb home">
+        <Link href="/#top" className="shrink-0" aria-label="Honeycomb home">
           <Logo />
-        </a>
+        </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
           <div
@@ -105,13 +105,16 @@ export function SiteHeader() {
                           if (!agent) return null
                           return (
                             <li key={id}>
-                              <button
-                                type="button"
-                                onClick={() => goToAgent(id)}
-                                className="py-1.5 text-left text-sm text-graphite transition-colors hover:text-ember"
+                              <Link
+                                href={`/${id}`}
+                                onClick={closeMenus}
+                                className="block py-1.5 text-left text-sm text-graphite transition-colors hover:text-ember"
+                                aria-current={
+                                  pathname === `/${id}` ? "page" : undefined
+                                }
                               >
                                 {agent.label}
-                              </button>
+                              </Link>
                             </li>
                           )
                         })}
@@ -119,28 +122,28 @@ export function SiteHeader() {
                     </div>
                   ))}
                 </div>
-                <button
-                  type="button"
+                <Link
+                  href="/#agents"
                   onClick={goToAll}
-                  className="mt-6 font-mono text-[12px] tracking-[0.14em] text-charcoal uppercase underline decoration-charcoal/40 underline-offset-4 transition-colors hover:text-ember hover:decoration-ember"
+                  className="mt-6 inline-block font-mono text-[12px] tracking-[0.14em] text-charcoal uppercase underline decoration-charcoal/40 underline-offset-4 transition-colors hover:text-ember hover:decoration-ember"
                 >
                   View all solutions →
-                </button>
+                </Link>
               </div>
             </div>
           </div>
-          <a
-            href="#process"
+          <Link
+            href="/#process"
             className="text-sm font-medium text-charcoal transition-colors hover:text-graphite"
           >
             How it works
-          </a>
-          <a
-            href="#about"
+          </Link>
+          <Link
+            href="/#about"
             className="text-sm font-medium text-charcoal transition-colors hover:text-graphite"
           >
             About
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -202,33 +205,36 @@ export function SiteHeader() {
                   if (!agent) return null
                   return (
                     <li key={id}>
-                      <button
-                        type="button"
-                        onClick={() => goToAgent(id)}
+                      <Link
+                        href={`/${id}`}
+                        onClick={closeMenus}
                         className="block w-full py-3 text-left text-lg text-charcoal"
+                        aria-current={
+                          pathname === `/${id}` ? "page" : undefined
+                        }
                       >
                         {agent.label}
-                      </button>
+                      </Link>
                     </li>
                   )
                 })}
               </ul>
             </div>
           ))}
-          <a
-            href="#process"
+          <Link
+            href="/#process"
             onClick={() => setMenuOpen(false)}
             className="block py-3 text-lg text-charcoal"
           >
             How it works
-          </a>
-          <a
-            href="#about"
+          </Link>
+          <Link
+            href="/#about"
             onClick={() => setMenuOpen(false)}
             className="block py-3 text-lg text-charcoal"
           >
             About
-          </a>
+          </Link>
           <Cta href={DEMO_MAIL} tone="primary" size="pill" className="mt-2">
             Book a demo
           </Cta>
