@@ -1,26 +1,34 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState, useSyncExternalStore } from "react"
 
 import { Container } from "@/components/container"
 import { Logo } from "@/components/logo"
-import { useSite } from "@/components/site-state"
 import { Cta } from "@/components/ui/button"
-import { agents, DEMO_MAIL, navGroups, type AgentId } from "@/lib/content"
+import { DEMO_MAIL } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
-export function SiteHeader() {
-  const { selectAgent, selectIndustry } = useSite()
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [agentsOpen, setAgentsOpen] = useState(false)
+const links = [
+  { href: "/product", label: "Product" },
+  { href: "/#process", label: "How it works" },
+  { href: "/#about", label: "About" },
+]
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+function subscribeScroll(onChange: () => void) {
+  window.addEventListener("scroll", onChange, { passive: true })
+  return () => window.removeEventListener("scroll", onChange)
+}
+
+export function SiteHeader() {
+  const pathname = usePathname()
+  const scrolled = useSyncExternalStore(
+    subscribeScroll,
+    () => window.scrollY > 8,
+    () => false
+  )
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : ""
@@ -28,20 +36,6 @@ export function SiteHeader() {
       document.body.style.overflow = ""
     }
   }, [menuOpen])
-
-  function goToAgent(id: AgentId) {
-    selectAgent(id)
-    setMenuOpen(false)
-    setAgentsOpen(false)
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" })
-  }
-
-  function goToAll() {
-    selectIndustry(null)
-    setMenuOpen(false)
-    setAgentsOpen(false)
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" })
-  }
 
   return (
     <header
@@ -53,94 +47,27 @@ export function SiteHeader() {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4">
-        <a href="#top" className="shrink-0" aria-label="Honeycomb home">
+        <Link href="/#top" className="shrink-0" aria-label="Honeycomb AI home">
           <Logo />
-        </a>
+        </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
-          <div
-            className="relative"
-            onMouseEnter={() => setAgentsOpen(true)}
-            onMouseLeave={() => setAgentsOpen(false)}
-            onFocus={() => setAgentsOpen(true)}
-            onBlur={(event) => {
-              const next = event.relatedTarget
-              if (
-                !(next instanceof Node) ||
-                !event.currentTarget.contains(next)
-              ) {
-                setAgentsOpen(false)
-              }
-            }}
-          >
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 text-sm font-medium text-charcoal transition-colors hover:text-graphite"
-              aria-expanded={agentsOpen}
-              aria-haspopup="true"
-            >
-              Agents
-              <span className="text-[11px] text-stone" aria-hidden>
-                +
-              </span>
-            </button>
-            <div
-              className={cn(
-                "absolute top-full left-1/2 z-50 w-[640px] -translate-x-1/2 pt-4 transition duration-200",
-                agentsOpen
-                  ? "visible translate-y-0 opacity-100"
-                  : "invisible -translate-y-1 opacity-0"
-              )}
-            >
-              <div className="border border-sand bg-cream px-8 py-7 shadow-[0_18px_50px_rgba(21,21,21,0.08)]">
-                <div className="grid grid-cols-3 gap-8">
-                  {navGroups.map((group) => (
-                    <div key={group.label}>
-                      <p className="mb-3 font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
-                        {group.label}
-                      </p>
-                      <ul className="space-y-1">
-                        {group.ids.map((id) => {
-                          const agent = agents.find((item) => item.id === id)
-                          if (!agent) return null
-                          return (
-                            <li key={id}>
-                              <button
-                                type="button"
-                                onClick={() => goToAgent(id)}
-                                className="py-1.5 text-left text-sm text-graphite transition-colors hover:text-ember"
-                              >
-                                {agent.label}
-                              </button>
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={goToAll}
-                  className="mt-6 font-mono text-[12px] tracking-[0.14em] text-charcoal uppercase underline decoration-charcoal/40 underline-offset-4 transition-colors hover:text-ember hover:decoration-ember"
-                >
-                  View all solutions →
-                </button>
-              </div>
-            </div>
-          </div>
-          <a
-            href="#process"
-            className="text-sm font-medium text-charcoal transition-colors hover:text-graphite"
-          >
-            How it works
-          </a>
-          <a
-            href="#about"
-            className="text-sm font-medium text-charcoal transition-colors hover:text-graphite"
-          >
-            About
-          </a>
+          {links.map((link) => {
+            const current = link.href === "/product" && pathname === "/product"
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={current ? "page" : undefined}
+                className={cn(
+                  "text-sm font-medium text-charcoal transition-colors hover:text-graphite",
+                  current && "underline underline-offset-[6px]"
+                )}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -190,46 +117,23 @@ export function SiteHeader() {
             : "pointer-events-none invisible opacity-0"
         )}
       >
-        <div className="space-y-8">
-          {navGroups.map((group) => (
-            <div key={group.label}>
-              <p className="mb-2 font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
-                {group.label}
-              </p>
-              <ul>
-                {group.ids.map((id) => {
-                  const agent = agents.find((item) => item.id === id)
-                  if (!agent) return null
-                  return (
-                    <li key={id}>
-                      <button
-                        type="button"
-                        onClick={() => goToAgent(id)}
-                        className="block w-full py-3 text-left text-lg text-charcoal"
-                      >
-                        {agent.label}
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
+        <div className="space-y-2">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="block py-3 text-lg text-charcoal"
+              aria-current={
+                link.href === "/product" && pathname === "/product"
+                  ? "page"
+                  : undefined
+              }
+            >
+              {link.label}
+            </Link>
           ))}
-          <a
-            href="#process"
-            onClick={() => setMenuOpen(false)}
-            className="block py-3 text-lg text-charcoal"
-          >
-            How it works
-          </a>
-          <a
-            href="#about"
-            onClick={() => setMenuOpen(false)}
-            className="block py-3 text-lg text-charcoal"
-          >
-            About
-          </a>
-          <Cta href={DEMO_MAIL} tone="primary" size="pill" className="mt-2">
+          <Cta href={DEMO_MAIL} tone="primary" size="pill" className="mt-4">
             Book a demo
           </Cta>
         </div>

@@ -143,6 +143,33 @@
   --ch: min(500px, 58vh);
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+.brand-mark {
+  background-color: #6f6d69;
+  transition: background-color 200ms ease;
+}
+
+.group:hover .brand-mark,
+.group:focus-visible .brand-mark {
+  background-color: var(--mark);
+}
+
+.demo-stage {
+  container-type: size;
+}
+
 .font-display {
   font-synthesis: none;
 }
@@ -154,7 +181,8 @@
 
   .animate-word-in,
   .animate-word-out,
-  .animate-fade-up {
+  .animate-fade-up,
+  .animate-marquee {
     animation: none !important;
   }
 }

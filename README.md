@@ -21,7 +21,7 @@ npm run build
 
 ## Page
 
-Fixed header with an Agents menu, a full-bleed hero whose headline word rotates, an industry mosaic that filters the agent carousel, a six-agent carousel, a “works inside” system list, a scroll-pinned four-step process, a closing call to action, and a footer with a masked Honeycomb wordmark.
+Fixed header with an Agents menu, a full-bleed hero whose headline word rotates, an industry mosaic that filters the agent carousel, a six-agent carousel, a “works inside” system list, a scroll-pinned four-step process, a closing call to action, and a footer with a Honeycomb AI wordmark.
 
 Demo links open `mailto:ankush@honeycombai.in`.
 
