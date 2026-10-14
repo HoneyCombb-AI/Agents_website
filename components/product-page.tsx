@@ -87,6 +87,10 @@ export function ProductPage() {
                 Each one learns the job from your team, on your floor, from your
                 own history.
               </p>
+              <p className="mx-auto mt-4 max-w-[44rem] text-center text-[17px] leading-7 text-ink-2 md:text-[19px] md:leading-8">
+                These are the six standard agents we&apos;ve already built. We
+                also build custom agents around your use case and your ideas.
+              </p>
             </div>
             <div className="border-t border-rule p-3 md:p-4">
               <ProductGrid />
