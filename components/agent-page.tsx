@@ -8,7 +8,8 @@ import { FaqList } from "@/components/faq-list"
 import { HeroArt } from "@/components/hero-art"
 import { SiteFooter } from "@/components/site-footer"
 import { Cta } from "@/components/ui/button"
-import { agents, DEMO_MAIL, demoMail, systems, type Agent } from "@/lib/content"
+import { WorksInside } from "@/components/works-inside"
+import { agents, DEMO_MAIL, demoMail, type Agent } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 function SectionLabel({ children }: { children: string }) {
@@ -246,28 +247,7 @@ export function AgentPage({ agent }: { agent: Agent }) {
               Stays in its own separate environment.
             </dd>
           </dl>
-          <div className="mt-10 flex flex-col gap-6">
-            {systems.map((row) => (
-              <div
-                key={row.category}
-                className="grid items-baseline gap-3 md:grid-cols-[96px_1fr]"
-              >
-                <p className="font-mono text-[13px] tracking-[0.08em] text-charcoal uppercase">
-                  {row.category}
-                </p>
-                <ul className="flex flex-wrap gap-x-8 gap-y-2">
-                  {row.names.map((name) => (
-                    <li
-                      key={name}
-                      className="text-[15px] font-semibold tracking-[-0.02em] text-charcoal/75"
-                    >
-                      {name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <WorksInside className="mt-10" />
         </Container>
       </section>
 

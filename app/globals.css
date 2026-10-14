@@ -156,6 +156,16 @@
   animation: marquee 32s linear infinite;
 }
 
+.brand-mark {
+  background-color: #6f6d69;
+  transition: background-color 200ms ease;
+}
+
+.group:hover .brand-mark,
+.group:focus-visible .brand-mark {
+  background-color: var(--mark);
+}
+
 .demo-stage {
   container-type: size;
 }

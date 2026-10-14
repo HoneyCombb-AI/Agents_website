@@ -1,5 +1,6 @@
 import { Container } from "@/components/container"
-import { DEMO_MAIL, steps, systems } from "@/lib/content"
+import { WorksInside } from "@/components/works-inside"
+import { DEMO_MAIL, steps } from "@/lib/content"
 
 export function Process() {
   return (
@@ -39,28 +40,7 @@ export function Process() {
           <p className="font-mono text-[15px] tracking-[0.08em] text-ink-3 uppercase">
             Works inside
           </p>
-          <div className="mt-10 flex flex-col gap-12">
-            {systems.map((row) => (
-              <div
-                key={row.category}
-                className="grid items-center gap-4 md:grid-cols-[96px_1fr] md:gap-8"
-              >
-                <p className="font-mono text-[15px] tracking-[0.08em] text-charcoal uppercase">
-                  {row.category}
-                </p>
-                <ul className="flex flex-wrap items-center gap-x-10 gap-y-4">
-                  {row.names.map((name) => (
-                    <li
-                      key={name}
-                      className="font-body text-[15px] font-semibold tracking-[-0.02em] text-charcoal opacity-70 md:text-[17px]"
-                    >
-                      {name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <WorksInside className="mt-10" />
           <p className="mt-12 text-[19px] leading-8 text-charcoal">
             Don&apos;t see yours? We&apos;ll connect it.{" "}
             <a
