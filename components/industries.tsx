@@ -150,6 +150,7 @@ export function Industries() {
         >
           <IndustryTab
             label="All industries"
+            image="/industries/all.jpg"
             pressed={industryId === null}
             onClick={() => {
               setIndustryId(null)
@@ -275,6 +276,11 @@ export function Industries() {
               })
             : null}
         </div>
+        <p className="text-[12px] leading-5 text-stone">
+          Stamping photo by Glenn McKechnie. Molding photo by Pedro Calamaro.
+          Thermoforming photo by Rdd1901. Plating photo by Encik Tekateki.
+          Wikimedia Commons, CC BY-SA.
+        </p>
       </Container>
     </section>
   )
@@ -296,35 +302,27 @@ function IndustryTab({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={cn(
-        "group relative shrink-0 overflow-hidden border-r border-b border-rule px-4 py-3 text-center font-mono text-[13px] tracking-[0.08em] uppercase transition-colors first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:flex md:aspect-[4/3] md:items-end md:px-4 md:pt-4 md:pb-4 md:text-left md:whitespace-normal md:first:border-l-0",
-        pressed
-          ? "bg-charcoal text-ivory"
-          : "bg-ivory text-charcoal hover:bg-mist"
-      )}
+      className="group relative aspect-[4/3] w-[168px] shrink-0 overflow-hidden border-r border-b border-rule text-left font-mono text-[13px] tracking-[0.08em] text-ivory uppercase first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:w-auto md:first:border-l-0"
     >
       {image ? (
-        <>
-          <Image
-            src={image}
-            alt=""
-            fill
-            sizes="200px"
-            className={cn(
-              "pointer-events-none hidden object-cover opacity-0 transition-opacity duration-300 md:block",
-              pressed ? "md:hidden" : "md:group-hover:opacity-100"
-            )}
-          />
-          <span
-            aria-hidden
-            className={cn(
-              "pointer-events-none absolute inset-0 hidden bg-charcoal/55 opacity-0 transition-opacity duration-300 md:block",
-              pressed ? "md:hidden" : "md:group-hover:opacity-100"
-            )}
-          />
-        </>
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 16vw, 168px"
+          className="object-cover"
+        />
       ) : null}
-      <span className="relative">{label}</span>
+      <span
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/88 via-charcoal/50 to-charcoal/30",
+          pressed && "from-charcoal/92 via-charcoal/72 to-charcoal/58"
+        )}
+      />
+      <span className="relative z-10 flex h-full items-end px-3 py-3 md:px-4 md:py-4">
+        {label}
+      </span>
     </button>
   )
 }

@@ -1,6 +1,5 @@
 import { Container } from "@/components/container"
-import { WorksInside } from "@/components/works-inside"
-import { DEMO_MAIL, steps } from "@/lib/content"
+import { steps } from "@/lib/content"
 
 export function Process() {
   return (
@@ -34,22 +33,6 @@ export function Process() {
               </article>
             ))}
           </div>
-        </div>
-
-        <div>
-          <p className="font-mono text-[15px] tracking-[0.08em] text-ink-3 uppercase">
-            Works inside
-          </p>
-          <WorksInside className="mt-10" />
-          <p className="mt-12 text-[19px] leading-8 text-charcoal">
-            Don&apos;t see yours? We&apos;ll connect it.{" "}
-            <a
-              href={DEMO_MAIL}
-              className="ml-2 font-mono text-[13px] tracking-[0.08em] uppercase underline underline-offset-4 hover:text-ember"
-            >
-              Book a demo
-            </a>
-          </p>
         </div>
       </Container>
     </section>

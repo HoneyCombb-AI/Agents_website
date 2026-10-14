@@ -8,7 +8,6 @@ import { FaqList } from "@/components/faq-list"
 import { HeroArt } from "@/components/hero-art"
 import { SiteFooter } from "@/components/site-footer"
 import { Cta } from "@/components/ui/button"
-import { WorksInside } from "@/components/works-inside"
 import { agents, DEMO_MAIL, demoMail, type Agent } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
@@ -247,7 +246,6 @@ export function AgentPage({ agent }: { agent: Agent }) {
               Stays in its own separate environment.
             </dd>
           </dl>
-          <WorksInside className="mt-10" />
         </Container>
       </section>
 
