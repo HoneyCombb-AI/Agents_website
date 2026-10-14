@@ -150,44 +150,45 @@ export const agents: Agent[] = [
     icon: "quote",
     group: "Sales",
     label: "Quoting",
-    heading: "Quotes, sent.",
-    body: "Reads each RFQ, estimates the job the way your team would, and drafts the quote.",
+    heading: "Drawings, quoted.",
+    body: "Reads the customer's drawing and drafts a shop-ready quote for build-to-print work.",
     image: photo("1565043589221-1a6fd9ae45c7", 1400),
     oneLiner:
-      "Reads each RFQ, estimates the job the way your team would, and drafts the quote.",
-    promise: "Your Quoting agent prices the way your estimators price.",
-    howTitle: "From the RFQ to the quote.",
+      "Reads the customer's drawing and drafts a shop-ready quote for build-to-print work.",
+    promise:
+      "Your Quoting agent turns a drawing into a route, a cycle time, and a price.",
+    howTitle: "From the drawing to the quote.",
     howBody:
-      "It reads each RFQ, plans the operations, and prices cycle time and material the way your shop would. Your team checks the number. And hits send.",
+      "It extracts the callouts, checks the job against your machines, builds the route and the cycle time, and costs it on your rates. Your estimator changes a line. And hits send.",
     demoStory:
-      "An RFQ arrives from Sagar Hydraulics. The agent plans the housing and the shaft, prices them from the rate card, and drafts quote QT-1842. Your team sends it. Sample data.",
+      "An RFQ arrives from Vindhya Drives with a drawing of a helical pinion. The agent extracts the specs, checks the shop can make it, routes a forged blank through turning, hobbing, carburising, and grinding, costs the job, and the estimator shortens the gear-grind cycle before sending the quote. Sample data.",
     different: different(
-      "We build it on your floor, from your rate card, your machines, and the jobs you have already run. Never from a book of standard minutes.",
-      "It reads the RFQ in your inbox and prices the way your estimators do. Your data stays where it is. Correct a rate, and the next quote uses it.",
-      "The quote it drafts is the quote Order Entry will check. Start here, or add it once the orders are already flowing."
+      "We build it with your estimators, from your machines, your rate card, and the way a drawing becomes a route. Gears, shafts, and other build-to-print work.",
+      "It reads the PDF or TIF in your inbox and prices the job on your machine-hour rates. Your data stays where it is. Change a cycle time, and that is the number that goes out.",
+      "The quote it drafts is the quote Order Entry will check, and the route is the one Scheduling can place."
     ),
     steps: buildSteps(
-      "A Honeycomb engineer spends time with your estimators, learning how a drawing becomes a price.",
-      "We build the agent on your rate card, your past jobs, and the rules your seniors already carry.",
-      "Your team runs live RFQs through it, and we tune it with them until it quotes the way you do.",
-      "It runs in your inbox and your ERP. Your data stays where it is. Every correction makes the next quote cleaner."
+      "A Honeycomb engineer spends time with your estimators, learning how a drawing becomes a route and a price.",
+      "We build the agent on your machines, your rates, and the jobs your shop has already run.",
+      "Your team runs live drawings through it, beside the way you quote today, until the route is one they would sign.",
+      "It drafts in your inbox. Your estimator still reviews the number and hits send."
     ),
     faqs: [
       {
         q: "How does Honeycomb’s Quoting agent work?",
-        a: "It reads each RFQ, estimates the job the way your team would, and drafts the quote. We build it from your rate card and the jobs you have actually run.",
+        a: "A drawing comes in. It pulls material, mass, tolerances, gear data, heat treatment, and finish into a spec table, and flags anything it had to assume. It checks the job against your machines, builds the route op by op, puts a cycle time and a setup on each op, and costs material, machining, heat treat, and overheads down to a rupee per piece. Your estimator reviews it.",
       },
       {
         q: "How do you build my Quoting agent?",
-        a: "On your floor, with your estimators, in four steps. We learn how you price, build the agent on that rate card, test it on live RFQs, and then let it draft inside the tools you already use.",
+        a: "On your floor, with your estimators, in four steps. We learn how you route a gear or a shaft, build the agent on your machines and your rate card, run live drawings through it with you, and then let it draft in the inbox you already use.",
       },
       {
-        q: "Does it work with my ERP?",
-        a: "Yes. It works with your ERP, your CRM, and your inbox. Tally, SAP Business One, Busy, Zoho, Gmail, and Outlook are the usual set. Your data stays where it is.",
+        q: "Does an estimator still check the quote?",
+        a: "Yes. The agent drafts. Your estimator can change a cycle time, a rate, or a blank, and then they hit send. Nothing goes to the customer until a person sends it.",
       },
       {
-        q: "What happens when I add more agents?",
-        a: "Order Entry checks the next PO against the quote this agent drafted. Scheduling can see the operations. Each one makes the quote worth more than a PDF in a sent folder.",
+        q: "What work is it for?",
+        a: "Custom, build-to-print parts, where every job starts from the customer's drawing. Gears, shafts, and machined components, priced on your machines and your rates.",
       },
     ],
     cta: "Spend your hours where they count. Start with your Quoting agent.",
