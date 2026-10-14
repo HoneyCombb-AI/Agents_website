@@ -1,21 +1,28 @@
-import Link from "next/link"
-
 import { Container } from "@/components/container"
 import { Logo } from "@/components/logo"
 import { agents, DEMO_MAIL } from "@/lib/content"
 
 const columns = [
   {
-    title: "Company",
+    title: "Product",
     links: [
-      { label: "Product", href: "/product" },
-      { label: "About", href: "/#about" },
-      { label: "How it works", href: "/#process" },
+      { label: "The product", href: "/product" },
+      ...agents.map((agent) => ({ label: agent.label, href: `/${agent.id}` })),
     ],
   },
   {
-    title: "Contact",
-    links: [{ label: "Book a demo", href: DEMO_MAIL }],
+    title: "Company",
+    links: [
+      { label: "How it works", href: "/#process" },
+      { label: "About", href: "/#about" },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "Book a demo", href: DEMO_MAIL },
+      { label: "ankush@honeycombai.in", href: DEMO_MAIL },
+    ],
   },
 ]
 
@@ -38,23 +45,6 @@ export function SiteFooter() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3 md:col-span-5">
-            <div>
-              <p className="font-mono text-[12px] tracking-[0.14em] text-stone uppercase">
-                Solutions
-              </p>
-              <ul className="mt-4">
-                {agents.map((agent) => (
-                  <li key={agent.id}>
-                    <Link
-                      href={`/${agent.id}`}
-                      className="inline-block py-1.5 text-sm text-graphite transition-colors hover:text-charcoal md:py-1"
-                    >
-                      {agent.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
             {columns.map((column) => (
               <div key={column.title}>
                 <p className="font-mono text-[12px] tracking-[0.14em] text-stone uppercase">

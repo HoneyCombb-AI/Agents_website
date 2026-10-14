@@ -1,147 +1,393 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useRef, useState } from "react"
+
+import { agentIcons } from "@/components/agent-icons"
 import { Container } from "@/components/container"
-import { useSite } from "@/components/site-state"
-import { agents, industries, type Industry } from "@/lib/content"
+import { agents, industries, type Agent, type AgentId } from "@/lib/content"
 import { cn } from "@/lib/utils"
 
-function industryAgents(industry: Industry) {
-  return industry.agents
-    .map((id) => agents.find((agent) => agent.id === id))
-    .filter((agent) => agent !== undefined)
+const GAP = 16
+
+type Slot = {
+  x: number
+  y: number
+  w: number
+  h: number
+  chip: boolean
+  n?: string
 }
 
-function IndustryButton({
-  industry,
+function place(
+  width: number,
+  selected: AgentId[] | null,
+  openId: string | null
+): { slots: Slot[]; height: number } {
+  const fullH = 132
+  const openExtra = 96
+  if (!selected) {
+    const cols = 3
+    const w = (width - GAP * (cols - 1)) / cols
+    const slots = agents.map((agent, index) => {
+      const row = Math.floor(index / cols)
+      const col = index % cols
+      const extra = agent.id === openId ? openExtra : 0
+      return {
+        x: col * (w + GAP),
+        y:
+          row * (fullH + GAP) +
+          (row > 0 &&
+          openId &&
+          agents.findIndex((item) => item.id === openId) < cols
+            ? openExtra
+            : 0),
+        w,
+        h: fullH + extra,
+        chip: false,
+      }
+    })
+    const rows = 2
+    const height = rows * fullH + GAP + (openId ? openExtra : 0)
+    return { slots, height }
+  }
+
+  const included = selected
+    .map((id) => agents.find((agent) => agent.id === id))
+    .filter((agent): agent is Agent => Boolean(agent))
+  const excluded = agents.filter((agent) => !selected.includes(agent.id))
+  const n = included.length
+  const w = (width - GAP * (n - 1)) / n
+  const slots: Slot[] = agents.map(() => ({
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    chip: false,
+  }))
+
+  included.forEach((agent, index) => {
+    const at = agents.findIndex((item) => item.id === agent.id)
+    const extra = agent.id === openId ? openExtra : 0
+    slots[at] = {
+      x: index * (w + GAP),
+      y: 0,
+      w,
+      h: fullH + extra,
+      chip: false,
+      n: String(index + 1).padStart(2, "0"),
+    }
+  })
+
+  const chipW = Math.min(
+    220,
+    (width - GAP * Math.max(excluded.length - 1, 0)) /
+      Math.max(excluded.length, 1)
+  )
+  const rowW = excluded.length * chipW + GAP * Math.max(excluded.length - 1, 0)
+  const startX = Math.max(0, (width - rowW) / 2)
+  const chipY =
+    fullH +
+    (openId && selected.includes(openId as AgentId) ? openExtra : 0) +
+    28
+  excluded.forEach((agent, index) => {
+    const at = agents.findIndex((item) => item.id === agent.id)
+    slots[at] = {
+      x: startX + index * (chipW + GAP),
+      y: chipY,
+      w: chipW,
+      h: 44,
+      chip: true,
+    }
+  })
+
+  return { slots, height: chipY + 44 }
+}
+
+export function Industries() {
+  const [industryId, setIndustryId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    const el = stageRef.current
+    if (!el) return
+    const measure = () => setWidth(el.clientWidth)
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const industry = industries.find((item) => item.id === industryId) ?? null
+  const selected = industry ? industry.agents : null
+  const { slots, height } = place(width || 1, selected, openId)
+  const count = selected ? selected.length : agents.length
+  const start = selected
+    ? agents.find((agent) => agent.id === selected[0])
+    : null
+
+  return (
+    <section
+      id="agents"
+      className="scroll-mt-24 bg-ivory pt-16 pb-20 md:pt-24 md:pb-32"
+    >
+      <Container className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
+          <h2 className="font-body text-[clamp(32px,3.4vw,48px)] leading-[1.12] font-normal tracking-[-0.01em] text-charcoal">
+            Tell us what you do.
+          </h2>
+          <p className="max-w-[46rem] text-[19px] leading-7 text-ink-2 lg:text-[clamp(17px,1.7vw,21px)]">
+            Let&apos;s start with the first job to take off the desk.
+          </p>
+        </div>
+
+        <div
+          role="group"
+          aria-label="Industry"
+          className="-mx-6 flex [scrollbar-width:none] overflow-x-auto border-t border-rule px-6 md:mx-0 md:grid md:grid-cols-4 md:border-l md:px-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
+        >
+          <IndustryTab
+            label="All industries"
+            pressed={industryId === null}
+            onClick={() => {
+              setIndustryId(null)
+              setOpenId(null)
+            }}
+          />
+          {industries.map((item) => (
+            <IndustryTab
+              key={item.id}
+              label={item.label}
+              image={item.image}
+              pressed={industryId === item.id}
+              onClick={() => {
+                setIndustryId(item.id)
+                setOpenId(null)
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <p className="flex flex-wrap items-center gap-x-3 font-mono text-[13px] tracking-[0.08em] text-ink-3 uppercase">
+            <span className="text-charcoal">
+              {selected
+                ? `${count} of ${agents.length} agents`
+                : `${agents.length} agents`}
+            </span>
+            <span>For {industry ? industry.label : "all industries"}</span>
+            {start ? (
+              <span className="text-charcoal">· Start with {start.label}</span>
+            ) : null}
+          </p>
+          <p className="max-w-[36rem] text-[17px] leading-7 text-ink-2">
+            Start with these agents. As we work alongside your team, we build
+            the next ones around your workflow.
+          </p>
+        </div>
+
+        <div className="relative lg:hidden">
+          <ul className="flex flex-col gap-3">
+            {(selected
+              ? selected
+                  .map((id) => agents.find((agent) => agent.id === id))
+                  .filter((agent): agent is Agent => Boolean(agent))
+              : agents
+            ).map((agent, index) => (
+              <li key={agent.id}>
+                <AgentBody
+                  agent={agent}
+                  n={selected ? String(index + 1).padStart(2, "0") : undefined}
+                  open={openId === agent.id}
+                  onToggle={() =>
+                    setOpenId((current) =>
+                      current === agent.id ? null : agent.id
+                    )
+                  }
+                />
+              </li>
+            ))}
+          </ul>
+          {selected ? (
+            <div className="mt-4 flex flex-wrap gap-2">
+              <p className="w-full font-mono text-[12px] tracking-[0.1em] text-stone uppercase">
+                Also available
+              </p>
+              {agents
+                .filter((agent) => !selected.includes(agent.id))
+                .map((agent) => (
+                  <Link
+                    key={agent.id}
+                    href={`/${agent.id}`}
+                    className="border border-rule px-3 py-2 font-mono text-[12px] tracking-[0.08em] text-charcoal uppercase"
+                  >
+                    {agent.label}
+                  </Link>
+                ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div
+          ref={stageRef}
+          className="relative hidden lg:block"
+          style={{ height: width ? height : undefined }}
+        >
+          {width
+            ? agents.map((agent, index) => {
+                const slot = slots[index]
+                return (
+                  <div
+                    key={agent.id}
+                    className="absolute top-0 left-0"
+                    style={{
+                      width: slot.w,
+                      height: slot.h,
+                      transform: `translate(${slot.x}px, ${slot.y}px)`,
+                      transition:
+                        "transform 460ms cubic-bezier(0.2, 0, 0, 1), width 460ms cubic-bezier(0.2, 0, 0, 1), height 460ms cubic-bezier(0.2, 0, 0, 1)",
+                      zIndex: openId === agent.id ? 3 : slot.chip ? 1 : 2,
+                    }}
+                  >
+                    {slot.chip ? (
+                      <Link
+                        href={`/${agent.id}`}
+                        className="flex h-full items-center justify-center border border-rule bg-ivory font-mono text-[12px] tracking-[0.08em] text-charcoal uppercase hover:border-charcoal"
+                      >
+                        {agent.label}
+                      </Link>
+                    ) : (
+                      <AgentBody
+                        agent={agent}
+                        n={slot.n}
+                        open={openId === agent.id}
+                        onToggle={() =>
+                          setOpenId((current) =>
+                            current === agent.id ? null : agent.id
+                          )
+                        }
+                      />
+                    )}
+                  </div>
+                )
+              })
+            : null}
+        </div>
+      </Container>
+    </section>
+  )
+}
+
+function IndustryTab({
+  label,
+  image,
   pressed,
-  onSelect,
-  featured,
+  onClick,
 }: {
-  industry: Industry
+  label: string
+  image?: string
   pressed: boolean
-  onSelect: () => void
-  featured?: boolean
+  onClick: () => void
 }) {
-  const fits = industryAgents(industry)
   return (
     <button
       type="button"
       aria-pressed={pressed}
-      aria-label={`${industry.label}. ${fits.map((agent) => agent.label).join(", ")}`}
-      onClick={onSelect}
+      onClick={onClick}
       className={cn(
-        "flex flex-col text-left focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-charcoal",
-        featured
-          ? "gap-4 border border-hairline px-6 py-6 md:px-8 md:py-8"
-          : "min-h-[132px] gap-3 border-r border-b border-hairline px-4 py-4 md:px-5 md:py-5",
+        "group relative shrink-0 overflow-hidden border-r border-b border-rule px-4 py-3 text-center font-mono text-[13px] tracking-[0.08em] uppercase transition-colors first:border-l focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal md:flex md:aspect-[4/3] md:items-end md:px-4 md:pt-4 md:pb-4 md:text-left md:whitespace-normal md:first:border-l-0",
         pressed
-          ? "z-10 bg-charcoal text-ivory outline outline-2 -outline-offset-2 outline-charcoal"
-          : featured
-            ? "bg-mist text-charcoal hover:bg-sand/40"
-            : "bg-ivory text-charcoal hover:bg-mist"
+          ? "bg-charcoal text-ivory"
+          : "bg-ivory text-charcoal hover:bg-mist"
       )}
     >
-      <span>
-        <span
-          className={cn(
-            "block leading-snug",
-            featured
-              ? "text-[26px] md:text-[32px]"
-              : "text-[17px] md:text-[18px]"
-          )}
-        >
-          {industry.label}
-        </span>
-        <span
-          className={cn(
-            "mt-1 block leading-5",
-            featured ? "mt-2 text-[16px] leading-6" : "text-[14px]",
-            pressed ? "text-ivory/75" : "text-ink-2"
-          )}
-        >
-          {industry.note}
-        </span>
-      </span>
-      <span
-        className={cn(
-          "mt-auto flex flex-wrap gap-x-3 gap-y-1",
-          featured ? "gap-x-5" : ""
-        )}
-      >
-        {fits.map((agent) => (
-          <span
-            key={agent.id}
+      {image ? (
+        <>
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="200px"
             className={cn(
-              "font-mono tracking-[0.06em] uppercase",
-              featured ? "text-[13px]" : "text-[11px] leading-4",
-              pressed ? "text-ivory/80" : "text-stone"
+              "pointer-events-none hidden object-cover opacity-0 transition-opacity duration-300 md:block",
+              pressed ? "md:hidden" : "md:group-hover:opacity-100"
             )}
-          >
-            {agent.label}
-          </span>
-        ))}
-      </span>
+          />
+          <span
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute inset-0 hidden bg-charcoal/55 opacity-0 transition-opacity duration-300 md:block",
+              pressed ? "md:hidden" : "md:group-hover:opacity-100"
+            )}
+          />
+        </>
+      ) : null}
+      <span className="relative">{label}</span>
     </button>
   )
 }
 
-export function Industries() {
-  const { industryId, selectIndustry } = useSite()
-  const featured = industries.find((industry) => industry.featured)
-  const rest = industries.filter((industry) => !industry.featured)
-
+function AgentBody({
+  agent,
+  n,
+  open,
+  onToggle,
+}: {
+  agent: Agent
+  n?: string
+  open: boolean
+  onToggle: () => void
+}) {
+  const Icon = agentIcons[agent.icon]
   return (
-    <section
-      id="industries"
-      className="scroll-mt-24 bg-ivory pt-24 pb-4 md:pt-40"
-    >
-      <Container className="flex flex-col items-start gap-6">
-        <h2 className="font-body text-[clamp(32px,3.4vw,48px)] leading-[1.12] font-normal tracking-[-0.01em] text-charcoal">
-          Tell us the work.
-        </h2>
-        <p className="max-w-[46rem] text-[19px] leading-7 text-ink-2 lg:text-[clamp(17px,1.7vw,21px)] lg:leading-8">
-          The agents under each name are the ones that fit.
-        </p>
-
-        <div role="group" aria-label="Industry" className="mt-6 w-full">
-          {featured ? (
-            <IndustryButton
-              industry={featured}
-              featured
-              pressed={industryId === featured.id}
-              onSelect={() =>
-                selectIndustry(industryId === featured.id ? null : featured.id)
-              }
-            />
-          ) : null}
-          <div className="mt-3 grid grid-cols-2 border-t border-l border-hairline sm:grid-cols-3 lg:grid-cols-4">
-            {rest.map((industry) => (
-              <IndustryButton
-                key={industry.id}
-                industry={industry}
-                pressed={industryId === industry.id}
-                onSelect={() =>
-                  selectIndustry(
-                    industryId === industry.id ? null : industry.id
-                  )
-                }
-              />
-            ))}
-          </div>
-        </div>
-
+    <article className="flex h-full flex-col overflow-hidden rounded-[2px] border border-rule bg-ivory text-charcoal transition-colors hover:border-charcoal">
+      <div className="flex items-center gap-4 px-5 py-5">
+        {n ? (
+          <span className="font-mono text-[13px] tracking-[0.08em] text-stone">
+            {n}
+          </span>
+        ) : (
+          <span className="flex size-12 shrink-0 items-center justify-center border border-rule">
+            <Icon aria-hidden strokeWidth={1.4} className="size-6" />
+          </span>
+        )}
+        <Link
+          href={`/${agent.id}`}
+          className="text-[18px] leading-6 font-medium hover:text-ember"
+        >
+          {agent.label}
+        </Link>
         <button
           type="button"
-          aria-pressed={industryId === null}
-          onClick={() => selectIndustry(null)}
-          className={cn(
-            "font-mono text-[13px] tracking-[0.08em] uppercase underline underline-offset-4 transition-colors hover:text-ember",
-            industryId === null ? "text-charcoal" : "text-ink-3"
-          )}
+          aria-expanded={open}
+          aria-label={`More about ${agent.label}`}
+          onClick={onToggle}
+          className="ml-auto flex size-[22px] items-center justify-center rounded-[2px] border border-rule"
         >
-          All industries
+          <span
+            aria-hidden
+            className={cn(
+              "block size-[5px] border-r border-b border-current transition-transform duration-300",
+              open
+                ? "translate-y-[1px] -rotate-135"
+                : "-translate-y-px rotate-45"
+            )}
+          />
         </button>
-      </Container>
-    </section>
+      </div>
+      {open ? (
+        <div className="px-5 pb-5">
+          <p className="text-[15px] leading-6 text-ink-2">{agent.oneLiner}</p>
+          <Link
+            href={`/${agent.id}#how-it-works`}
+            className="mt-3 inline-block font-mono text-[12px] tracking-[0.08em] uppercase underline underline-offset-4"
+          >
+            See it work
+          </Link>
+        </div>
+      ) : null}
+    </article>
   )
 }

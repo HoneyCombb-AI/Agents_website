@@ -387,85 +387,77 @@ export const agents: Agent[] = [
 export type Industry = {
   id: string
   label: string
-  note: string
   agents: AgentId[]
-  featured?: boolean
+  image: string
 }
 
+/** Same count as the reference grid: All industries, plus eleven shops. */
 export const industries: Industry[] = [
   {
     id: "textiles",
-    label: "Textiles & yarn",
-    note: "Yarn, fabric, and mills",
+    label: "Textiles",
     agents: ["order-entry", "scheduling", "customer-service"],
-    featured: true,
+    image: photo("1558618666-fcd25c85cd64", 800),
   },
   {
-    id: "electricals",
-    label: "Electricals & electronics",
-    note: "Assemblies, panels, and components",
-    agents: [
-      "quoting",
-      "order-entry",
-      "scheduling",
-      "customer-service",
-      "ap-ar",
-    ],
-  },
-  {
-    id: "plastics",
-    label: "Plastics & moulding",
-    note: "Moulded parts and components",
+    id: "machining",
+    label: "Machining",
     agents: ["quoting", "order-entry", "scheduling", "customer-service"],
+    image: photo("1565043589221-1a6fd9ae45c7", 800),
   },
   {
-    id: "custom",
-    label: "Custom manufacturing",
-    note: "Build-to-print and job shops",
-    agents: [
-      "prospecting",
-      "quoting",
-      "order-entry",
-      "scheduling",
-      "customer-service",
-      "ap-ar",
-    ],
+    id: "fabrication",
+    label: "Fabrication",
+    agents: ["quoting", "order-entry", "scheduling", "customer-service"],
+    image: photo("1504328345606-18bbc8c9d7d1", 800),
   },
   {
-    id: "metals",
-    label: "Metals & fabrication",
-    note: "Fabricated and machined metal",
-    agents: [
-      "quoting",
-      "order-entry",
-      "scheduling",
-      "customer-service",
-      "ap-ar",
-    ],
-  },
-  {
-    id: "distributors",
-    label: "Industrial distributors",
-    note: "Stock, supply, and resale",
-    agents: ["prospecting", "order-entry", "customer-service", "ap-ar"],
+    id: "stamping",
+    label: "Stamping",
+    agents: ["quoting", "order-entry", "scheduling", "ap-ar"],
+    image: photo("1581091226825-a6a2a5aee158", 800),
   },
   {
     id: "packaging",
     label: "Packaging",
-    note: "Packs, cartons, and converted stock",
-    agents: ["order-entry", "scheduling", "customer-service", "ap-ar"],
+    agents: ["quoting", "order-entry", "scheduling", "ap-ar"],
+    image: photo("1581094794329-c8112a89af12", 800),
   },
   {
-    id: "auto",
-    label: "Auto components",
-    note: "Components for vehicle makers",
-    agents: [
-      "quoting",
-      "order-entry",
-      "scheduling",
-      "customer-service",
-      "ap-ar",
-    ],
+    id: "molding",
+    label: "Molding",
+    agents: ["quoting", "scheduling", "order-entry", "customer-service"],
+    image: photo("1581092918056-0c4c3acd3789", 800),
+  },
+  {
+    id: "tool-die",
+    label: "Tool + die",
+    agents: ["quoting", "scheduling", "customer-service", "order-entry"],
+    image: photo("1581092162384-8987c1d64718", 800),
+  },
+  {
+    id: "thermoforming",
+    label: "Thermoforming",
+    agents: ["quoting", "order-entry", "scheduling", "customer-service"],
+    image: photo("1581092334651-ddf26d9a09d0", 800),
+  },
+  {
+    id: "plating",
+    label: "Plating + finishing",
+    agents: ["quoting", "order-entry", "customer-service", "scheduling"],
+    image: photo("1504917595217-d4dc5ebe6122", 800),
+  },
+  {
+    id: "labels",
+    label: "Labels",
+    agents: ["order-entry", "quoting", "scheduling", "customer-service"],
+    image: photo("1586528116311-ad8dd3c8310d", 800),
+  },
+  {
+    id: "fasteners",
+    label: "Fasteners",
+    agents: ["order-entry", "customer-service", "quoting", "ap-ar"],
+    image: photo("1619642751034-765dfdf7c58e", 800),
   },
 ]
 
@@ -484,22 +476,26 @@ export const steps = [
   {
     n: "01",
     title: "On site",
-    body: "A Honeycomb AI engineer spends a week on your shop floor, learning how a job moves and where the numbers live.",
+    kicker: "On your floor",
+    body: "A Honeycomb AI engineer spends time on your floor, learning how a job moves from the first email to the last booking.",
   },
   {
     n: "02",
     title: "Build",
-    body: "We build each agent around your drawings, rate cards, and the rules your seniors already carry. No two plants get the same Honeycomb AI.",
+    kicker: "With your team",
+    body: "We build each agent on your history and the know-how your seniors already carry.",
   },
   {
     n: "03",
     title: "Beta",
-    body: "Your team runs the agent beside the way you work today. We correct it with you before anyone switches over.",
+    kicker: "On live work",
+    body: "Your team runs the agent beside the way you work today. We tune it with them until it works like you.",
   },
   {
     n: "04",
     title: "Live",
-    body: "The agents run in your system. Your data stays where it is. Every correction makes the next quote cleaner.",
+    kicker: "In your system",
+    body: "The agents go to work in the system you already run, and your team gets that time back.",
   },
 ]
 
