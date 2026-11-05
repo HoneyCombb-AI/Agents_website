@@ -79,7 +79,7 @@ export function Hero() {
           </p>
           <h1 className="mt-6 max-w-[14ch] font-display text-[min(7vw,12.5svh,calc((100vw-48px)/11.1),120px)] leading-[1.02] font-normal tracking-[0.005em] text-cream sm:max-w-none">
             <span className="sr-only">
-              Automate your quotes, orders, schedules, and invoices.
+              Automate your ERP, quotes, orders, schedules, and invoices.
             </span>
             <span aria-hidden className="block">
               AUTOMATE

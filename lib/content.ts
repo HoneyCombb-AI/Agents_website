@@ -384,11 +384,20 @@ export const agents: Agent[] = [
   },
 ]
 
+/** Industry-picker copy when an agent’s shared blurb does not fit that shop. */
+export type IndustryAgentDetail = {
+  /** Detail line. The picker renders this in uppercase. */
+  detail: string
+  /** Short line under the detail. */
+  line: string
+}
+
 export type Industry = {
   id: string
   label: string
   agents: AgentId[]
   image: string
+  agentCopy?: Partial<Record<AgentId, IndustryAgentDetail>>
 }
 
 /** Same count as the reference grid: All industries, plus eleven shops. */
@@ -422,6 +431,14 @@ export const industries: Industry[] = [
     label: "Packaging",
     agents: ["quoting", "order-entry", "scheduling", "ap-ar"],
     image: "/industries/packaging.jpg",
+    // Packaging quotes from RFQs. Machining and the shared Quoting page stay on drawings.
+    agentCopy: {
+      quoting: {
+        detail:
+          "Reads each RFQ, estimates the job the way your team would, and drafts the quote.",
+        line: "Quotes, sent.",
+      },
+    },
   },
   {
     id: "molding",
@@ -462,6 +479,7 @@ export const industries: Industry[] = [
 ]
 
 export const heroWords = [
+  "ERP.",
   "QUOTES.",
   "ORDERS.",
   "SCHEDULES.",
