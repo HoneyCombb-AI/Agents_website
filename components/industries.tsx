@@ -6,7 +6,14 @@ import { useEffect, useRef, useState } from "react"
 
 import { agentIcons } from "@/components/agent-icons"
 import { Container } from "@/components/container"
-import { agents, industries, type Agent, type AgentId } from "@/lib/content"
+import {
+  agents,
+  industries,
+  type Agent,
+  type AgentId,
+  type Industry,
+  type IndustryAgentDetail,
+} from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 const GAP = 16
@@ -23,10 +30,10 @@ type Slot = {
 function place(
   width: number,
   selected: AgentId[] | null,
-  openId: string | null
+  openId: string | null,
+  openExtra = 96
 ): { slots: Slot[]; height: number } {
   const fullH = 132
-  const openExtra = 96
   if (!selected) {
     const cols = 3
     const w = (width - GAP * (cols - 1)) / cols
@@ -151,7 +158,13 @@ export function Industries() {
 
   const industry = industries.find((item) => item.id === industryId) ?? null
   const selected = industry ? industry.agents : null
-  const { slots, height } = place(width || 1, selected, openId)
+  const openDetail = detailFor(industry, openId)
+  const { slots, height } = place(
+    width || 1,
+    selected,
+    openId,
+    openDetail ? 124 : 96
+  )
   const count = selected ? selected.length : agents.length
   const start = selected
     ? agents.find((agent) => agent.id === selected[0])
@@ -229,6 +242,7 @@ export function Industries() {
               <li key={agent.id}>
                 <AgentBody
                   agent={agent}
+                  detail={industry?.agentCopy?.[agent.id]}
                   n={selected ? String(index + 1).padStart(2, "0") : undefined}
                   open={openId === agent.id}
                   onToggle={() =>
@@ -292,6 +306,7 @@ export function Industries() {
                     ) : (
                       <AgentBody
                         agent={agent}
+                        detail={industry?.agentCopy?.[agent.id]}
                         n={slot.n}
                         open={openId === agent.id}
                         onToggle={() =>
@@ -371,13 +386,23 @@ function IndustryTab({
   )
 }
 
+function detailFor(
+  industry: Industry | null,
+  agentId: string | null
+): IndustryAgentDetail | undefined {
+  if (!industry?.agentCopy || !agentId) return undefined
+  return industry.agentCopy[agentId as AgentId]
+}
+
 function AgentBody({
   agent,
+  detail,
   n,
   open,
   onToggle,
 }: {
   agent: Agent
+  detail?: IndustryAgentDetail
   n?: string
   open: boolean
   onToggle: () => void
@@ -421,7 +446,18 @@ function AgentBody({
       </div>
       {open ? (
         <div className="px-5 pb-5">
-          <p className="text-[15px] leading-6 text-ink-2">{agent.oneLiner}</p>
+          {detail ? (
+            <>
+              <p className="font-mono text-[12px] leading-[18px] tracking-[0.06em] text-ink-3 uppercase">
+                {detail.detail}
+              </p>
+              <p className="mt-4 text-[22px] leading-7 font-medium text-charcoal">
+                {detail.line}
+              </p>
+            </>
+          ) : (
+            <p className="text-[15px] leading-6 text-ink-2">{agent.oneLiner}</p>
+          )}
           <Link
             href={`/${agent.id}#how-it-works`}
             className="mt-3 inline-block font-mono text-[12px] tracking-[0.08em] uppercase underline underline-offset-4"
